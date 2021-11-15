@@ -468,7 +468,9 @@ class penjualan extends MX_Controller {
 		$this->db->select('total_bayar');
 		$total_bayar = $this->db->get_where('penjualan', ['faktur_penjualan' => $id])->row()->total_bayar;
 
-		$data['nominal'] = $total_bayar - $telah_dibayar;
+		$angsuran = $this->db->get_where('penjualan', ['faktur_penjualan' => $id])->row_array()['angsuran'];
+
+		$data['nominal'] = $angsuran;
 
 		$this->form_validation->set_rules('nominal', 'nominal', 'required');
 
