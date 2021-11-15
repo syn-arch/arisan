@@ -157,6 +157,8 @@ class penjualan_model extends CI_Model {
 			$status = 'Belum Lunas';
 		}
 
+		$angsuran = $tot / $post['periode'];
+
 		$dat =  [
 			'faktur_penjualan' => $post['faktur_penjualan'],
 			'id_outlet' => $id_outlet,
@@ -168,6 +170,9 @@ class penjualan_model extends CI_Model {
 			'alamat_pengiriman' => $post['alamat_pengiriman'],
 			'total_bayar' => $tot,
 			'diskon' => $post['diskon'],
+			'kocokan' => $post['kocokan'],
+			'periode' => $post['periode'],
+			'angsuran' => $angsuran,
 			'potongan' => str_replace('.', '' ,$post['potongan'])
 		];
 
@@ -309,6 +314,8 @@ class penjualan_model extends CI_Model {
 		
 		$tot = $jumlah2;
 
+		$angsuran = $tot / $post['periode'];
+
 		$data_penjualan = [
 			'id_outlet' => $id_outlet,
 			'id_petugas' => $post['id_petugas'],
@@ -319,6 +326,9 @@ class penjualan_model extends CI_Model {
 			'alamat_pengiriman' => $post['alamat_pengiriman'],
 			'total_bayar' => $tot,
 			'diskon' => $post['diskon'],
+			'kocokan' => $post['kocokan'],
+			'periode' => $post['periode'],
+			'angsuran' => $angsuran,
 			'potongan' => $post['potongan'],
 		];
 

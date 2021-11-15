@@ -120,17 +120,20 @@
                 <th>Jumlah Bayar</th>
                 <td colspan="2"><input readonly="" type="text" class="form-control jumlah_bayar" name="jumlah_bayar" value="Rp. 0"></td>
               </tr>
+              <input type="hidden" name="metode_pembayaran">
+              <input type="hidden" name="tgl_jatuh_tempo">
               <tr>
-                <th>Metode</th>
+                <th>Periode</th>
                 <td colspan="2">
-                  <select name="metode_pembayaran" id="metode_pembayaran" class="form-control metode_pembayaran">
-                    <option value="Cash" selected>Cash</option>
-                    <option value="Debit">Debit</option>
-                    <option value="Kredit">Kredit</option>
-                  </select>
+                  <input type="text" name="periode" id="periode" class="form-control" placeholder="Periode">
                 </td>
               </tr>
-              <input type="hidden" name="tgl_jatuh_tempo">
+              <tr>
+                <th>Nominal Kocokan</th>
+                <td colspan="2">
+                  <input type="text" name="kocokan" id="kocokan" class="form-control" placeholder="Nominal Kocokan">
+                </td>
+              </tr>
               <tr class="ship_nama">
                 <th>Nama</th>
                 <td colspan="2"><input type="text" placeholder="Nama" name="nama_pengiriman" id="nama_pengiriman" class="form-control"></td>

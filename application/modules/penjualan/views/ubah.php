@@ -186,6 +186,18 @@
               <input type="hidden" name="nama_pengiriman">
               <input type="hidden" name="alamat_pengiriman">
               <tr>
+                <th>Periode</th>
+                <td colspan="2">
+                  <input type="text" name="periode" id="periode" class="form-control" placeholder="Periode" value="<?php echo $penjualan['periode'] ?>">
+                </td>
+              </tr>
+              <tr>
+                <th>Nominal Kocokan</th>
+                <td colspan="2">
+                  <input type="text" name="kocokan" id="kocokan" class="form-control" placeholder="Nominal Kocokan" value="<?php echo $penjualan['kocokan'] ?>">
+                </td>
+              </tr>
+              <tr>
                 <td colspan="3">
                   <button type="submit" class="btn btn-primary btn-block btn-flat konfirmasi-penjualan">Konfirmasi</button>
                 </td>
