@@ -30,12 +30,12 @@
                             <?php foreach ($pembayaran as $row): ?>
                                 <tr>
                                     <td><?php echo $i++ ?></td>
-                                    <td><?php echo $row['tgl'] ?></td>
+                                    <td><?php echo $row['status_bayar'] == 'SUDAH BAYAR' ? ($row['tgl']) : '' ?></td>
                                     <td><?php echo "Rp. " . number_format($row['nominal']) ?></td>
                                     <?php if ($row['status_bayar'] == 'SUDAH BAYAR'): ?>
-                                    <td><button class="btn btn-success"><?php echo $row['status_bayar'] ?></button></td>
+                                        <td><button class="btn btn-success"><?php echo $row['status_bayar'] ?></button></td>
                                     <?php else: ?>
-                                    <td><button class="btn btn-danger"><?php echo $row['status_bayar'] ?></button></td>
+                                        <td><button class="btn btn-danger"><?php echo $row['status_bayar'] ?></button></td>
                                     <?php endif ?>
                                     <td>
                                         <a href="<?php echo base_url('penjualan/ubah_pembayaran/' . $row['id_pembayaran']) ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>

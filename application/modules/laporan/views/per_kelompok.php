@@ -77,7 +77,7 @@
                                 <?php foreach ($laporan as $index => $row): ?>
                                     <tr>
                                         <td><?php echo $index += 1 ?></td>
-                                        <td><?php echo $row['tgl'] ?></td>
+                                        <td><?php echo $row['status_bayar'] == 'SUDAH BAYAR' ? ($row['tgl']) : '' ?></td>
                                         <td><?php echo $row['periode_ke'] ?></td>
                                         <td><?php echo $row['status_bayar'] == 'SUDAH BAYAR' ? number_format($row['nominal']) : '' ?></td>
                                         <?php if ($row['status_bayar'] == 'SUDAH BAYAR'): ?>
