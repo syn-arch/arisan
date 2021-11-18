@@ -20,6 +20,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
+                                <th>Periode Ke</th>
                                 <th>Nominal</th>
                                 <th>Status</th>
                                 <th><i class="fa fa-cogs"></i></th>
@@ -31,6 +32,7 @@
                                 <tr>
                                     <td><?php echo $i++ ?></td>
                                     <td><?php echo $row['status_bayar'] == 'SUDAH BAYAR' ? ($row['tgl']) : '' ?></td>
+                                    <td><?php echo ($row['periode_ke']) ?></td>
                                     <td><?php echo "Rp. " . number_format($row['nominal']) ?></td>
                                     <?php if ($row['status_bayar'] == 'SUDAH BAYAR'): ?>
                                         <td><button class="btn btn-success"><?php echo $row['status_bayar'] ?></button></td>
