@@ -18,11 +18,11 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="">Dari Tanggal</label>
-                                <input type="date" name="dari" id="dari" class="form-control" value="<?php echo date('Y-m-d') ?>">
+                                <input type="date" name="dari" id="dari" class="form-control" value="<?php echo $this->input->get('dari') ?>">
                             </div>
                             <div class="form-group">
                                 <label for="">Sampai Tanggal</label>
-                                <input type="date" name="sampai" id="sampai" class="form-control" value="<?php echo date('Y-m-d') ?>">
+                                <input type="date" name="sampai" id="sampai" class="form-control" value="<?php echo $this->input->get('sampai') ?>">
                             </div>
                             <div class="form-group <?php if(form_error('id_outlet')) echo 'has-error'?>">
                                 <label for="id_outlet">Outlet</label>

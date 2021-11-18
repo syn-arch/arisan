@@ -17,6 +17,8 @@ class laporan extends MX_Controller {
 		cek_login();
 		$this->load->model('laporan/laporan_model');
 		$this->load->model('outlet/outlet_model');
+		$this->load->model('karyawan/karyawan_model');
+		$this->load->model('pelanggan/pelanggan_model');
 		$this->load->library('Pdf');
 
 		$pengaturan = $this->db->get('pengaturan')->row();
@@ -222,7 +224,7 @@ class laporan extends MX_Controller {
 			$data['dari'] = '';
 			$data['sampai'] = '';
 			$data['id_outlet'] = '';
-        }
+		}
 
 		$data['outlet'] = $this->outlet_model->get_outlet();
 
@@ -501,6 +503,69 @@ class laporan extends MX_Controller {
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('laporan/laba_rugi', $data, FALSE);
+		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+	public function transaksi()
+	{
+		$data['judul'] = "Laporan Transaksi";
+
+		$dari = $this->input->get('dari');
+		$sampai = $this->input->get('sampai');
+
+		$data['laporan'] = $this->laporan_model->get_transaksi($dari, $sampai);
+
+		$this->load->view('templates/header', $data, FALSE);
+		$this->load->view('laporan/transaksi', $data, FALSE);
+		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+	public function seluruh_paket()
+	{
+		$data['judul'] = "Laporan Seluruh Paket";
+
+		$dari = $this->input->get('dari');
+		$sampai = $this->input->get('sampai');
+		$periode = $this->input->get('periode');
+		$id_pelanggan = $this->input->get('id_pelanggan');
+		$id_karyawan = $this->input->get('id_karyawan');
+
+		$data['laporan'] = $this->laporan_model->get_seluruh_paket($dari, $sampai, $periode, $id_karyawan, $id_pelanggan);
+		$data['karyawan'] = $this->karyawan_model->get_karyawan();
+		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
+
+		if ($id_pelanggan) {
+			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
+		}
+		if ($id_karyawan) {
+			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
+		}
+
+		$this->load->view('templates/header', $data, FALSE);
+		$this->load->view('laporan/seluruh_paket', $data, FALSE);
+		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+	public function per_kelompok()
+	{
+		$data['judul'] = "Laporan Perkelompok";
+
+		$id_pelanggan = $this->input->get('id_pelanggan');
+		$id_karyawan = $this->input->get('id_karyawan');
+
+		$data['laporan'] = $this->laporan_model->get_perkelompok($id_karyawan, $id_pelanggan);
+		$data['karyawan'] = $this->karyawan_model->get_karyawan();
+		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
+
+		if ($id_pelanggan) {
+			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
+		}
+		if ($id_karyawan) {
+			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
+		}
+
+		$this->load->view('templates/header', $data, FALSE);
+		$this->load->view('laporan/per_kelompok', $data, FALSE);
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 

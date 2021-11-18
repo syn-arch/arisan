@@ -153,12 +153,7 @@ class penjualan extends MX_Controller {
 		);
 		
 		$this->session->set_userdata( $array );
-
-		if ($_POST['cash'] == '') {
-			$this->session->set_flashdata('error', 'Anda belum memasukan cash');
-			redirect('penjualan','refresh');
-		}
-
+		
 		if (!isset($_POST['id_barang'])) {
 			$this->session->set_flashdata('error', 'Anda belum memasukan item barang');
 			redirect('penjualan','refresh');

@@ -9,8 +9,7 @@
                 </div>
                 <div class="pull-right">
                     <div class="box-title">
-                        <a href="<?php echo base_url('penjualan/tambah_pembayaran/' . $faktur_penjualan) ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
-                        <a href="<?php echo base_url('laporan/piutang') ?>" class="btn btn-success"><i class="fa fa-arrow-left"></i> Kembali</a>
+                        <a href="<?php echo base_url('penjualan/riwayat_penjualan') ?>" class="btn btn-success"><i class="fa fa-arrow-left"></i> Kembali</a>
                     </div>
                 </div>
             </div>
@@ -21,10 +20,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>Dibayar Dengan</th>
                                 <th>Nominal</th>
-                                <th>Kartu Kredit</th>
-                                <th>Kartu Debit</th>
+                                <th>Status</th>
                                 <th><i class="fa fa-cogs"></i></th>
                             </tr>
                         </thead>
@@ -34,13 +31,14 @@
                                 <tr>
                                     <td><?php echo $i++ ?></td>
                                     <td><?php echo $row['tgl'] ?></td>
-                                    <td><?php echo $row['dibayar_dengan'] ?></td>
                                     <td><?php echo "Rp. " . number_format($row['nominal']) ?></td>
-                                    <td><?php echo $row['no_kredit'] ?></td>
-                                    <td><?php echo $row['no_debit'] ?></td>
+                                    <?php if ($row['status_bayar'] == 'SUDAH BAYAR'): ?>
+                                    <td><button class="btn btn-success"><?php echo $row['status_bayar'] ?></button></td>
+                                    <?php else: ?>
+                                    <td><button class="btn btn-danger"><?php echo $row['status_bayar'] ?></button></td>
+                                    <?php endif ?>
                                     <td>
                                         <a href="<?php echo base_url('penjualan/ubah_pembayaran/' . $row['id_pembayaran']) ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                        <a data-href="<?php echo base_url('penjualan/hapus_pembayaran/' . $row['id_pembayaran'] . '/' . $row['faktur_penjualan'] ) ?>" class="btn btn-danger hapus_pembayaran"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>

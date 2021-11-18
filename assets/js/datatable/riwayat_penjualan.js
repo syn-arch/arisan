@@ -66,7 +66,6 @@ $(function(){
 			"render" : function(data, type, row) {
 				if (level == 'Admin') {
 					return `<a title="invoice" class="btn btn-flat btn-info" href="${base_url}penjualan/invoice/${data}"><i class="fa fa-eye"></i></a>
-					<a title="surat jalan" target="_blank" class="btn btn-flat btn-warning" href="${base_url}penjualan/surat_jalan/${data}"><i class="fa fa-sticky-note"></i></a>
 					<a title="ubah transaksi" class="btn btn-flat btn-primary" href="${base_url}penjualan/ubah/${data}"><i class="fa fa-edit"></i></a>
 					<a title="daftar pembayaran" class="btn btn-flat btn-success" href="${base_url}penjualan/pembayaran/${data}"><i class="fa fa-list"></i></a>
 					<a title="hapus penjualan" class="btn btn-flat btn-danger hapus_riwayat_penjualan" data-href="${base_url}penjualan/hapus_penjualan/${data}"><i class="fa fa-trash"></i></a>

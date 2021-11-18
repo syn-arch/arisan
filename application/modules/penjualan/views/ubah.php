@@ -188,7 +188,10 @@
               <tr>
                 <th>Periode</th>
                 <td colspan="2">
-                  <input type="text" name="periode" id="periode" class="form-control" placeholder="Periode" value="<?php echo $penjualan['periode'] ?>">
+                  <select name="periode" id="periode" class="form-control">
+                    <option <?php echo $penjualan['periode'] == '15' ? 'selected' : '' ?> value="15">15</option>
+                    <option <?php echo $penjualan['periode'] == '17' ? 'selected' : '' ?> value="17">17</option>
+                  </select>
                 </td>
               </tr>
               <tr>

@@ -9,6 +9,7 @@ class penjualan_model extends CI_Model {
 
 		$this->db->select_sum('nominal', 'total_pembayaran');
 		$this->db->where('faktur_penjualan', $faktur_penjualan);
+		$this->db->where('status_bayar', 'SUDAH BAYAR');
 		$total_pembayaran = $this->db->get('pembayaran')->row_array()['total_pembayaran'];
 
 		if ($total_pembayaran >= $total) {
@@ -26,13 +27,13 @@ class penjualan_model extends CI_Model {
 	public function get_hold($id = '')
 	{
 		if ($id == '') {
-						$this->db->join('karyawan', 'id_karyawan', 'left');
-						$this->db->join('pelanggan', 'id_pelanggan', 'left');
-						$this->db->where('status', 'Hold');
-				return $this->db->get('penjualan')->result_array();
+			$this->db->join('karyawan', 'id_karyawan', 'left');
+			$this->db->join('pelanggan', 'id_pelanggan', 'left');
+			$this->db->where('status', 'Hold');
+			return $this->db->get('penjualan')->result_array();
 		}	else{
-						$this->db->where('faktur_penjualan', $id);
-				return $this->db->get('penjualan')->row_array();
+			$this->db->where('faktur_penjualan', $id);
+			return $this->db->get('penjualan')->row_array();
 		}
 	}
 
@@ -43,8 +44,10 @@ class penjualan_model extends CI_Model {
 		}
 
 		if ($id == '') {
+			$this->db->order_by('periode_ke', 'asc');
 			return $this->db->get('pembayaran')->result_array();
 		}else{
+			$this->db->order_by('periode_ke', 'asc');
 			return $this->db->get_where('pembayaran', ['faktur_penjualan' => $id])->result_array();
 		}
 	}
@@ -74,14 +77,16 @@ class penjualan_model extends CI_Model {
 	public function ubah_pembayaran($id, $post)
 	{
 		$pembayaran = [
+			'tgl' => date('Y-m-d H:i:s'),
 			'faktur_penjualan' => $post['faktur_penjualan'],
 			'dibayar_dengan' => $post['metode_pembayaran'],
 			'nominal' => $post['nominal'],
 			'no_debit' => $post['no_debit'],
-			'no_kredit' => $post['no_kredit']
+			'no_kredit' => $post['no_kredit'],
+			'status_bayar' => $post['status_bayar'],
 		];
 
-		if ($_FILES['lampiran']['name']) {
+		if (false) {
 			$gambar_lama = $this->db->get_where('pembayaran', ['id_pembayaran' => $id])->row_array()['lampiran'];
 			$path = 'assets/img/penjualan/' . $gambar_lama;
 			unlink(FCPATH . $path);
@@ -113,49 +118,45 @@ class penjualan_model extends CI_Model {
 
 		$this->db->trans_start();
 
-			for ($i=0; $i < count($post['id_barang']); $i++) { 
+		for ($i=0; $i < count($post['id_barang']); $i++) { 
 
-				$this->db->select('*, ' . $post['type_golongan'][$i] . ' AS harga_jual');
-				$brg = $this->db->get_where('barang', ['id_barang' => $post['id_barang'][$i]])->row_array();
+			$this->db->select('*, ' . $post['type_golongan'][$i] . ' AS harga_jual');
+			$brg = $this->db->get_where('barang', ['id_barang' => $post['id_barang'][$i]])->row_array();
 
-				$diskon = ($brg['diskon'] / 100) * $brg['harga_jual'];
-				$harga_brg = $brg['harga_jual'] - $diskon;
+			$diskon = ($brg['diskon'] / 100) * $brg['harga_jual'];
+			$harga_brg = $brg['harga_jual'] - $diskon;
 
-				$harga = $harga_brg;
-				$total_harga = $harga * $post['jumlah'][$i];
+			$harga = $harga_brg;
+			$total_harga = $harga * $post['jumlah'][$i];
 
-				$id_outlet = $this->session->userdata('id_outlet');
-				if (!$id_outlet) {
-					$id_outlet = $this->db->get('outlet')->row_array()['id_outlet'];
-				}
+			$id_outlet = $this->session->userdata('id_outlet');
+			if (!$id_outlet) {
+				$id_outlet = $this->db->get('outlet')->row_array()['id_outlet'];
+			}
 
-				$this->db->insert('detail_penjualan', [
-					'faktur_penjualan' => $post['faktur_penjualan'],
-					'id_barang' => $post['id_barang'][$i],
-					'type_golongan' => $post['type_golongan'][$i],
-					'jumlah' => $post['jumlah'][$i],
-					'total_harga' => $total_harga
-				]);
+			$this->db->insert('detail_penjualan', [
+				'faktur_penjualan' => $post['faktur_penjualan'],
+				'id_barang' => $post['id_barang'][$i],
+				'type_golongan' => $post['type_golongan'][$i],
+				'jumlah' => $post['jumlah'][$i],
+				'total_harga' => $total_harga
+			]);
 
 				// kurangi stok barang
-				$stok_barang = $this->db->get_where('stok_outlet', ['id_outlet' => $id_outlet ,'id_barang' => $post['id_barang'][$i]])->row_array()['stok'];
-				$stok_barang -= $post['jumlah'][$i];
+			$stok_barang = $this->db->get_where('stok_outlet', ['id_outlet' => $id_outlet ,'id_barang' => $post['id_barang'][$i]])->row_array()['stok'];
+			$stok_barang -= $post['jumlah'][$i];
 
-				$this->db->set('stok', $stok_barang);
-				$this->db->where('id_barang', $post['id_barang'][$i]);
-				$this->db->where('id_outlet', $id_outlet);
-				$this->db->update('stok_outlet');
-			}
+			$this->db->set('stok', $stok_barang);
+			$this->db->where('id_barang', $post['id_barang'][$i]);
+			$this->db->where('id_outlet', $id_outlet);
+			$this->db->update('stok_outlet');
+		}
 
 		$pengaturan = $this->db->get('pengaturan')->row_array();
 
 		$tot = $jumlah2;
 
-		if (str_replace('.', '', $post['cash']) >= $tot) {
-			$status = 'Lunas';
-		}else{
-			$status = 'Belum Lunas';
-		}
+		$status = 'Belum Lunas';
 
 		$angsuran = $tot / $post['periode'];
 
@@ -183,45 +184,42 @@ class penjualan_model extends CI_Model {
 			$dat['status'] = $status;
 		}
 
-        $this->db->insert('penjualan', $dat);
-        
-        $id_pby = 'PB-' . acak(10);
+		$this->db->insert('penjualan', $dat);
 
-        if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pby])->row_array()) {
-            $id_pem = 'PB-' . acak(10);
-            if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pem])->row_array()) {
-                $id_pem = 'PB-' . acak(10);
-                if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pem])->row_array()) {
-                    $id_pem = 'PB-' . acak(10);
-                }
-            }
-        }else{
-            $id_pem = $id_pby;
-        }
+		for ($i=1; $i <= $post['periode']; $i++) { 
 
-		$pembayaran = [
-			'id_pembayaran' => $id_pem,
-			'faktur_penjualan' => $post['faktur_penjualan'],
-			'dibayar_dengan' => $post['metode_pembayaran'],
-			'nominal' => str_replace('.', '' ,$post['cash']),
-			'no_debit' => $post['no_debit'],
-			'no_kredit' => $post['no_kredit']
-		];
 
-		if ($_FILES['lampiran']['name']) {
-			$pembayaran['lampiran'] = _upload('lampiran', 'penjualan', 'penjualan');
-		}
+			$id_pby = 'PB-' . acak(10);
 
-		$this->db->insert('pembayaran', $pembayaran);
+			if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pby])->row_array()) {
+				$id_pem = 'PB-' . acak(10);
+				if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pem])->row_array()) {
+					$id_pem = 'PB-' . acak(10);
+					if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pem])->row_array()) {
+						$id_pem = 'PB-' . acak(10);
+					}
+				}
+			}else{
+				$id_pem = $id_pby;
+			}
 
-		if ($post['id_service'] != '') {
-			$this->db->set('tgl_ambil', date('Y-m-d H:i:s'));
-			$this->db->set('status', 'TELAH DITERIMA');
-			$this->db->set('total_bayar', $jumlah2);
-			$this->db->set('cash', $post['cash']);
-			$this->db->set('ketentuan_garansi', $post['ketentuan_garansi']);
-			$this->db->where('id_service', $post['id_service']);
-			$this->db->update('service');
+			$pembayaran = [
+				'id_pembayaran' => $id_pem,
+				'periode_ke' => $i,
+				'faktur_penjualan' => $post['faktur_penjualan'],
+				'dibayar_dengan' => $post['metode_pembayaran'],
+				'nominal' => $angsuran,
+				'no_debit' => $post['no_debit'],
+				'no_kredit' => $post['no_kredit'],
+				'status_bayar' => 'BELUM BAYAR'
+			];
+
+			if ($_FILES['lampiran']['name']) {
+				$pembayaran['lampiran'] = _upload('lampiran', 'penjualan', 'penjualan');
+			}
+
+			$this->db->insert('pembayaran', $pembayaran);
+			
 		}
 
 		$this->db->trans_complete();

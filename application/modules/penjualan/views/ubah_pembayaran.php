@@ -21,45 +21,38 @@
                       <form method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id_pembayaran" value="<?php echo $pembayaran['id_pembayaran'] ?>">
                         <input type="hidden" name="faktur_penjualan" value="<?php echo $faktur_penjualan ?>">
-                          <div class="form-group <?php if(form_error('dibayar_dengan')) echo 'has-error'?>">
-                              <label for="dibayar_dengan">Metode Pembayaran</label>
-                              <select name="metode_pembayaran" id="metode_pembayaran" class="form-control metode_pembayaran">
-                                  <option value="Cash" <?php echo $pembayaran['dibayar_dengan'] == 'Cash' ? 'Selected' : '' ?>>Cash</option>
-                                  <option value="Debit" <?php echo $pembayaran['dibayar_dengan'] == 'Debit' ? 'Selected' : '' ?>>Debit</option>
-                                  <option value="Kredit" <?php echo $pembayaran['dibayar_dengan'] == 'Kredit' ? 'Selected' : '' ?>>Kredit</option>
-                              </select>
-                              <?php echo form_error('dibayar_dengan', '<small style="color:red">','</small>') ?>
-                          </div>
-                          <div class="form-group <?php if(form_error('nominal')) echo 'has-error'?>">
-                              <label for="nominal">Nominal</label>
-                              <input type="text" id="nominal" name="nominal" class="form-control nominal " placeholder="Nominal" value="<?php echo $pembayaran['nominal'] ?>">
-                              <?php echo form_error('nominal', '<small style="color:red">','</small>') ?>
-                          </div>
-                          <div class="form-group no_kredit <?php if(form_error('no_kredit')) echo 'has-error'?>">
-                              <label for="no_kredit">No Kredit</label>
-                              <input type="text" id="no_kredit" name="no_kredit" class="form-control no_kredit " placeholder="No Kredit" value="<?php echo $pembayaran['no_kredit'] ?>">
-                              <?php echo form_error('no_kredit', '<small style="color:red">','</small>') ?>
-                          </div>
-                          <div class="form-group no_debit <?php if(form_error('no_debit')) echo 'has-error'?>">
-                              <label for="no_debit">No Debit</label>
-                              <input type="text" id="no_debit" name="no_debit" class="form-control no_debit " placeholder="No Debit" value="<?php echo $pembayaran['no_debit'] ?>">
-                              <?php echo form_error('no_debit', '<small style="color:red">','</small>') ?>
-                          </div>
-                          <div class="form-group lampiran <?php if(form_error('lampiran')) echo 'has-error'?>">
-                              <label for="lampiran">Lampiran</label>
-                              <?php if ($pembayaran['lampiran'] != ''): ?>
-                                <img src="<?php echo base_url('assets/img/penjualan/' . $pembayaran['lampiran']) ?>" alt="" class="img-responsive">
-                              <?php endif ?>
-                              <input type="file" id="lampiran" name="lampiran" class="form-control lampiran " placeholder="Lampiran" value="<?php echo set_value('lampiran') ?>">
-                              <?php echo form_error('lampiran', '<small style="color:red">','</small>') ?>
-                          </div>
-                          <div class="form-group">
-                              <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                          </div>
-                      </form>  
-                  </div>
+                        <input type="hidden" name="metode_pembayaran" value="Cash">
+                        <input type="hidden" name="no_debit">
+                        <input type="hidden" name="no_kredit">
+                        <div class="form-group">
+                            <label for="">Tanggal</label>
+                            <input type="text" class="form-control" value="<?php echo date('Y-m-d H:i:s') ?>" readonly>
+                        </div>
+                        <div class="form-group <?php if(form_error('nominal')) echo 'has-error'?>">
+                            <label for="nominal">Nominal</label>
+                            <input type="text" id="nominal" name="nominal" class="form-control nominal " placeholder="Nominal" value="<?php echo $pembayaran['nominal'] ?>" readonly>
+                            <?php echo form_error('nominal', '<small style="color:red">','</small>') ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Periode</label>
+                            <input type="text" class="form-control" value="<?php echo $pembayaran['periode_ke'] ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <br>
+                            <input type="radio" name="status_bayar" id="sudah" value="SUDAH BAYAR" <?php echo $pembayaran['status_bayar'] == 'SUDAH BAYAR' ? 'checked' : '' ?>>
+                            <label for="sudah">SUDAH BAYAR</label>
+                            <br></br>
+                            <input type="radio" name="status_bayar" id="BELUM" value="BELUM BAYAR" <?php echo $pembayaran['status_bayar'] == 'BELUM BAYAR' ? 'checked' : '' ?>>
+                            <label for="BELUM">BELUM BAYAR</label>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                      </div>
+                  </form>  
               </div>
           </div>
       </div>
   </div>
+</div>
 </div>

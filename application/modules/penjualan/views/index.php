@@ -125,7 +125,10 @@
               <tr>
                 <th>Periode</th>
                 <td colspan="2">
-                  <input type="text" name="periode" id="periode" class="form-control" placeholder="Periode">
+                  <select name="periode" id="periode" class="form-control">
+                    <option value="15">15</option>
+                    <option value="17">17</option>
+                  </select>
                 </td>
               </tr>
               <tr>
@@ -141,10 +144,6 @@
               <tr class="ship_alamat">
                 <th>Alamat</th>
                 <td colspan="2"><input type="text" placeholder="Alamat" name="alamat_pengiriman" id="alamat_pengiriman" class="form-control"></td>
-              </tr>
-              <tr>
-                <th>Cash</th>
-                <td colspan="2"><input placeholder="Cash" required="true" type="text" autocomplete="off" class="form-control cash" name="cash"></td>
               </tr>
               <tr class="no_kredit">
                 <th>No Kredit</th>
@@ -163,10 +162,6 @@
                 <td colspan="2">
                   <input type="file" name="lampiran" id="lampiran" class="form-control">
                 </td>
-              </tr>
-              <tr>
-                <th>Kembalian</th>
-                <td colspan="2"><input readonly="" type="text" class="form-control kembalian"></td>
               </tr>
               <tr>
                 <td colspan="3">
