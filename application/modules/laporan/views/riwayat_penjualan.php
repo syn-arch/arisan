@@ -9,7 +9,6 @@
                 </div>
                 <div class="pull-right">
                     <a href="javascrip:void(0)" class="btn btn-danger hapus_bulk_riwayat_penjualan"><i class="fa fa-trash"></i> Hapus</a>
-                    <a href="<?php echo base_url('laporan/export_riwayat_penjualan') ?>" class="btn btn-success"><i class="fa fa-sign-in"></i> Export Excel</a>
                 </div>
             </div>
             <div class="box-body">
@@ -42,19 +41,50 @@
                 </div>
                 <br><br>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped" cellspacing="0" width="100%" id="table-riwayat-penjualan">
+                    <table class="table table-bordered table-striped" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" name="hapus_riwayat_penjualan" id="hapus_riwayat_penjualan" class="check_all"></th>
+                                <th>No</th>
                                 <th>Faktur</th>
                                 <th>Tanggal</th>
-                                <th>Pelanggan</th>
-                                <th>Kasir</th>
+                                <th>Agen</th>
+                                <th>Kelompok</th>
                                 <th>Total Bayar</th>
+                                <th>Cash</th>
+                                <th>Sisa Bayar</th>
                                 <th>Status</th>
-                                <th><i class="fa fa-cogs"></i></th>
+                                <th><i class="fa fa-gears"></i></th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <?php if ($laporan[0]['faktur_penjualan']): ?>
+
+                                <?php foreach ($laporan as $index => $row): ?>
+                                    <tr>
+                                        <td><?php echo $index += 1 ?></td>
+                                        <td><?php echo $row['faktur_penjualan'] ?></td>
+                                        <td><?php echo $row['tgl'] ?></td>
+                                        <td><?php echo $row['nama_karyawan'] ?></td>
+                                        <td><?php echo $row['nama_pelanggan'] ?></td>
+                                        <td><?php echo number_format($row['total_bayar']) ?></td>
+                                        <td><?php echo number_format($row['cash']) ?></td>
+                                        <td><?php echo number_format($row['sisa_bayar']) ?></td>
+                                        <?php if ($row['status'] == 'Lunas'): ?>
+                                            <td> <button class="btn btn-success"><?php echo $row['status'] ?></button></td>
+                                        <?php else: ?>
+                                            <td> <button class="btn btn-warning"><?php echo $row['status'] ?></button></td>
+                                        <?php endif ?>
+                                        <td>
+                                            <a title="invoice" class="btn btn-flat btn-info" href="<?php echo base_url('penjualan/invoice/') . $row['faktur_penjualan'] ?>"><i class="fa fa-eye"></i></a>
+                                            <a title="ubah transaksi" class="btn btn-flat btn-primary" href="<?php echo base_url('penjualan/ubah/') . $row['faktur_penjualan'] ?>"><i class="fa fa-edit"></i></a>
+                                            <a title="daftar pembayaran" class="btn btn-flat btn-success" href="<?php echo base_url('penjualan/pembayaran/') . $row['faktur_penjualan'] ?>"><i class="fa fa-list"></i></a>
+                                            <a title="hapus penjualan" class="btn btn-flat btn-danger hapus_riwayat_penjualan" data-href="<?php echo base_url('penjualan/hapus_penjualan/') . $row['faktur_penjualan'] ?>"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            <?php endif ?>
+
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -26,7 +26,7 @@
                         <input type="hidden" name="no_kredit">
                         <div class="form-group">
                             <label for="">Tanggal</label>
-                            <input type="text" class="form-control" value="<?php echo date('Y-m-d H:i:s') ?>" readonly>
+                            <input type="datetime-local" class="form-control" value="<?php echo date('Y-m-d\TH:i:s') ?>" name="tgl">
                         </div>
                         <div class="form-group <?php if(form_error('nominal')) echo 'has-error'?>">
                             <label for="nominal">Nominal</label>

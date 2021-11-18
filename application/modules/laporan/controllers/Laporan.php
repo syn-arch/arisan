@@ -113,6 +113,11 @@ class laporan extends MX_Controller {
 		$data['judul'] = "Riwayat Penjualan";
 		$data['outlet'] = $this->outlet_model->get_outlet();
 
+		$dari = $this->input->get('dari');
+		$sampai = $this->input->get('sampai');
+
+		$data['laporan'] = $this->laporan_model->get_transaksi($dari, $sampai);
+
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('laporan/riwayat_penjualan', $data, FALSE);
 		$this->load->view('templates/footer', $data, FALSE);

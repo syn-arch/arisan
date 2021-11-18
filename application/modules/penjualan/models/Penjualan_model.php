@@ -77,7 +77,7 @@ class penjualan_model extends CI_Model {
 	public function ubah_pembayaran($id, $post)
 	{
 		$pembayaran = [
-			'tgl' => date('Y-m-d H:i:s'),
+			'tgl' => $post['tgl'],
 			'faktur_penjualan' => $post['faktur_penjualan'],
 			'dibayar_dengan' => $post['metode_pembayaran'],
 			'nominal' => $post['nominal'],
