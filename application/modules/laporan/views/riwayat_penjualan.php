@@ -48,12 +48,9 @@
                                 <th><input type="checkbox" name="hapus_riwayat_penjualan" id="hapus_riwayat_penjualan" class="check_all"></th>
                                 <th>Faktur</th>
                                 <th>Tanggal</th>
-                                <th>Jatuh Tempo</th>
                                 <th>Pelanggan</th>
                                 <th>Kasir</th>
                                 <th>Total Bayar</th>
-                                <th>Cash</th>
-                                <th>Sisa Bayar</th>
                                 <th>Status</th>
                                 <th><i class="fa fa-cogs"></i></th>
                             </tr>

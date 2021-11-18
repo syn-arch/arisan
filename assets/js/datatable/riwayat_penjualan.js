@@ -24,9 +24,6 @@ $(function(){
 			"data" : "tgl",
 		},
 		{
-			"data" : "tgl_jatuh_tempo",
-		},
-		{
 			"data": "nama_pelanggan",
 		},
 		{
@@ -35,21 +32,6 @@ $(function(){
 		{
 			"data": "total_bayar",
 			render: $.fn.dataTable.render.number( '.', '.', 0, '')
-		},
-		{
-			searchable : false,
-			"data": "cash",
-			render: $.fn.dataTable.render.number( '.', '.', 0, '')
-		},
-		{
-			searchable : false,
-			"data": "sisa_bayar",
-			"render" : function(data, type, row) {
-				if(data < 0){
-					return '0'
-				}
-				return toRupiah(data, true)
-			}
 		},
 		{
 			"data" : "status",

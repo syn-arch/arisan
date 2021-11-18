@@ -62,7 +62,7 @@
 <script src="<?php echo base_url('assets/js/datatable/barang.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/datatable/stok.js') ?>"></script>
 <?php if ($judul == "Riwayat Penjualan"): ?>
-<script src="<?php echo base_url('assets/js/datatable/riwayat_penjualan.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/datatable/riwayat_penjualan.js?v=1.1') ?>"></script>
 <?php endif ?>
 <script src="<?php echo base_url('assets/js/datatable/riwayat_pembelian.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/datatable/riwayat_pengembalian.js') ?>"></script>
