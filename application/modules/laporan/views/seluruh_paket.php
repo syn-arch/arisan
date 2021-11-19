@@ -218,13 +218,19 @@
                                             $this->db->where('status_bayar', 'SUDAH BAYAR');
                                             $this->db->where('faktur_penjualan', $row['faktur_penjualan']);
                                             $jumlah_bayar = $this->db->get('pembayaran')->row()->jumlah_bayar;
+
+                                            $this->db->select('sum(profit_1 * jumlah) as laba');
+                                            $this->db->join('barang', 'id_barang');
+                                            $this->db->group_by('faktur_penjualan');
+                                            $this->db->where('faktur_penjualan', $row['faktur_penjualan']);
+                                            $laba = $this->db->get('detail_penjualan')->row()->laba;
                                             ?>
                                             <tr>
                                                 <td><?php echo $index += 1 ?></td>
                                                 <td><?php echo $row['nama_karyawan'] ?></td>
                                                 <td><?php echo $row['nama_pelanggan'] ?></td>
                                                 <td><?php echo number_format($row['total_bayar']) ?></td>
-                                                <td><?php echo number_format($row['laba']) ?></td>
+                                                <td><?php echo number_format($laba) ?></td>
                                                 <?php foreach ($pembayaran as $p): ?>
                                                     <td><?php echo ($p['status_bayar']) ?></td>
                                                 <?php endforeach ?>
