@@ -872,7 +872,6 @@ class laporan_model extends CI_Model {
 		public function get_seluruh_paket($dari = '', $sampai = '', $periode = '', $id_karyawan = '', $id_pelanggan = '')
 		{
 
-			$this->db->select('*, SUM(nominal) AS cash, (total_bayar - SUM(nominal)) AS sisa_bayar, (profit_1 * jumlah) AS laba');
 			$this->db->join('pembayaran', 'faktur_penjualan');
 			$this->db->join('detail_penjualan', 'faktur_penjualan');
 			$this->db->join('barang', 'barang.id_barang = detail_penjualan.id_barang');
@@ -889,7 +888,7 @@ class laporan_model extends CI_Model {
 				$this->db->where('id_pelanggan', $id_pelanggan);
 			}
 			$this->db->where('periode', $periode);
-			$this->db->group_by('faktur_penjualan');
+			$this->db->group_by('penjualan.faktur_penjualan');
 			return $this->db->get('penjualan')->result_array();
 		}
 
