@@ -34,11 +34,10 @@
                                     <td><?php echo $row['id_stok_opname'] ?></td>
                                     <td><?php echo $row['tgl'] ?></td>
                                     <td><?php echo $row['nama_petugas'] ?></td>
-                                    <td><?php echo $row['nama_outlet'] ?></td>
+                                    <td><?php echo $row['nama_outlet'] ?? 'Gudang' ?></td>
                                     <td><?php echo $row['keterangan'] ?></td>
                                     <td><?php echo "Rp. " . number_format($row['total_kerugian']) ?></td>
                                     <td>
-                                        <a title="ubah" href="<?php echo base_url('stok_opname/ubah/' . $row['id_stok_opname']) . '?id_outlet=' . $row['id_outlet'] ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                         <a title="export" href="<?php echo base_url('stok_opname/export_excel/' . $row['id_stok_opname']) ?>" class="btn btn-info"><i class="fa fa-sign-out"></i></a>
                                         <a title="hapus" data-href="<?php echo base_url('stok_opname/hapus/' . $row['id_stok_opname']) ?>" class="btn btn-danger hapus_stok_opname"><i class="fa fa-trash"></i></a>
                                     </td>

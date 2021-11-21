@@ -139,7 +139,9 @@ class penjualan_model extends CI_Model {
 				'id_barang' => $post['id_barang'][$i],
 				'type_golongan' => $post['type_golongan'][$i],
 				'jumlah' => $post['jumlah'][$i],
-				'total_harga' => $total_harga
+				'total_harga' => $total_harga,
+				'keterangan' => 'BELUM DIAMBIL',
+				'tgl_diambil' => date('0000-00-00 00:00:00')
 			]);
 
 				// kurangi stok barang
@@ -173,6 +175,7 @@ class penjualan_model extends CI_Model {
 			'diskon' => $post['diskon'],
 			'kocokan' => $post['kocokan'],
 			'periode' => $post['periode'],
+			'jenis_paket' => $post['jenis_paket'],
 			'angsuran' => $angsuran,
 			'potongan' => str_replace('.', '' ,$post['potongan'])
 		];
@@ -327,6 +330,7 @@ class penjualan_model extends CI_Model {
 			'kocokan' => $post['kocokan'],
 			'periode' => $post['periode'],
 			'angsuran' => $angsuran,
+			'jenis_paket' => $post['jenis_paket'],
 			'potongan' => $post['potongan'],
 		];
 

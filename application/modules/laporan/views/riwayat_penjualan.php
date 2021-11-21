@@ -52,12 +52,13 @@
                                 <th>Total Bayar</th>
                                 <th>Cash</th>
                                 <th>Sisa Bayar</th>
+                                <th>Jenis Paket</th>
                                 <th>Status</th>
                                 <th><i class="fa fa-gears"></i></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($laporan[0]['faktur_penjualan']): ?>
+                            <?php if (isset($laporan[0]['faktur_penjualan'])): ?>
 
                                 <?php foreach ($laporan as $index => $row): ?>
                                     <tr>
@@ -69,6 +70,7 @@
                                         <td><?php echo number_format($row['total_bayar']) ?></td>
                                         <td><?php echo number_format($row['cash']) ?></td>
                                         <td><?php echo number_format($row['sisa_bayar']) ?></td>
+                                        <td><?php echo ($row['jenis_paket']) ?></td>
                                         <?php if ($row['status'] == 'Lunas'): ?>
                                             <td> <button class="btn btn-success"><?php echo $row['status'] ?></button></td>
                                         <?php else: ?>

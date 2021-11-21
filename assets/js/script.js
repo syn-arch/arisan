@@ -18,15 +18,15 @@ function toRupiah(angka = '0', idr = false) {
     }
     var angkarev = angka.toString().split('').reverse().join('');
     for (var i = 0; i < angkarev.length; i++) if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
-    if (idr == true) {
-        return rupiah.split('', rupiah.length - 1).reverse().join('');
-    } else {
-        return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+        if (idr == true) {
+            return rupiah.split('', rupiah.length - 1).reverse().join('');
+        } else {
+            return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+        }
     }
-}
 
-function formatRupiah(angka, rp = false) {
-    var number_string = angka.replace(/[^,\d]/g, "").toString(),
+    function formatRupiah(angka, rp = false) {
+        var number_string = angka.replace(/[^,\d]/g, "").toString(),
         split = number_string.split(","),
         sisa = split[0].length % 3,
         rupiah = split[0].substr(0, sisa),
@@ -181,3 +181,46 @@ $('.golongan_4').keyup(function (e) {
 $('.nama_barang').keyup(function(){
     $('.nama_pendek').val($(this).val())
 });
+
+
+$('.id_agen_k').change(function(){
+    $.get(base_url + 'karyawan/get_karyawan_by_id_json/' + $(this).val(), function(data){
+        $('.alamat_karyawan').val(data.alamat)
+        $('.telepon_karyawan').val(data.telepon)
+    })
+})
+
+$('.keterangan').change(function(){
+
+    keterangan = $(this).val()
+    id_barang = $(this).data('brg')
+    id_pelanggan = $('select[name="id_pelanggan"]').val()
+    id_karyawan = $('select[name="id_karyawan"]').val()
+    jenis_paket = $('select[name="jenis_paket"]').val()
+
+    $.ajax({
+        url : base_url + 'penjualan/ubah_keterangan/',
+        method : 'post',
+        data : {
+            keterangan,
+            id_pelanggan,
+            id_karyawan,
+            jenis_paket,
+            id_barang,
+        },
+        success : function(){
+            swal({
+                title: "Berhasil!",
+                text: "Keterangan Berhasil Diubah",
+                icon: "success",
+                timer: 800
+            });
+
+            setTimeout(function(){
+                location.reload()
+            }, 1000)
+
+        }
+    })
+
+})

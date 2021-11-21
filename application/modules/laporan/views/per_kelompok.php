@@ -14,11 +14,19 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="">Agen</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control">
+                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
                                     <?php foreach ($karyawan as $row): ?>
                                         <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
                                     <?php endforeach ?>
                                 </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="">Telepon</label>
+                                <input type="text" class="form-control telepon_karyawan" placeholder="Telepon Agen" readonly value="<?php echo $this->input->get('id_karyawan')  != '' ? $agen['telepon'] : '' ?>"> 
+                            </div>
+                            <div class="form-group">
+                                <label for="">Alamat</label>
+                                <input type="text" class="form-control alamat_karyawan" placeholder="Alamat Agen" readonly value="<?php echo $this->input->get('id_karyawan') != '' ? $agen['alamat'] : '' ?>"> 
                             </div>
                             <div class="form-group">
                                 <label for="">Kelompok</label>
@@ -26,6 +34,13 @@
                                     <?php foreach ($pelanggan as $row): ?>
                                         <option value="<?php echo $row['id_pelanggan'] ?>" <?php echo $this->input->get('id_pelanggan') == $row['id_pelanggan'] ? 'selected' : '' ?>><?php echo $row['nama_pelanggan'] ?></option>
                                     <?php endforeach ?>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="">Jenis Paket</label>
+                                <select name="jenis_paket" id="jenis_paket" class="form-control">
+                                    <option value="REGULAR" <?php echo $this->input->get('jenis_paket') == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
+                                    <option value="TAHUNAN" <?php echo $this->input->get('jenis_paket') == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -50,6 +65,10 @@
                                 <tr>
                                     <td>Telepon</td>
                                     <td><?php echo $kelompok['telepon'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Nominal Kocokan</td>
+                                    <td><?php echo ($laporan['0']['kocokan']) ?></td>
                                 </tr>
                                 <tr>
                                     <td>Total Bayar</td>

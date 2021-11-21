@@ -22,6 +22,13 @@ class karyawan extends MX_Controller {
 		echo $this->karyawan_model->get_karyawan_json();
 	}
 
+
+	public function get_karyawan_by_id_json($id_karyawan)
+	{
+		header('Content-Type: application/json');
+		echo json_encode($this->karyawan_model->get_karyawan($id_karyawan));
+	}
+
 	public function hapus($id)
 	{
 		$this->karyawan_model->delete($id);

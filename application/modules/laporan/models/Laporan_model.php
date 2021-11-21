@@ -869,7 +869,7 @@ class laporan_model extends CI_Model {
 			return $this->db->get('penjualan')->result_array();
 		}
 
-		public function get_seluruh_paket($dari = '', $sampai = '', $periode = '', $id_karyawan = '', $id_pelanggan = '')
+		public function get_seluruh_paket($dari = '', $sampai = '', $periode = '', $id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
 		{
 
 			$this->db->join('pembayaran', 'faktur_penjualan');
@@ -887,19 +887,48 @@ class laporan_model extends CI_Model {
 			if ($id_pelanggan != '') {
 				$this->db->where('id_pelanggan', $id_pelanggan);
 			}
+			$this->db->where('jenis_paket', $jenis_paket);
 			$this->db->where('periode', $periode);
 			$this->db->group_by('penjualan.faktur_penjualan');
 			return $this->db->get('penjualan')->result_array();
 		}
 
-		public function get_perkelompok($id_karyawan = '', $id_pelanggan = '')
+		public function get_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
 		{
-
 			$this->db->where('id_pelanggan', $id_pelanggan);
 			$this->db->where('id_karyawan', $id_karyawan);
+			$this->db->where('jenis_paket', $jenis_paket);
 			$this->db->join('penjualan', 'faktur_penjualan');
 			$this->db->order_by('periode_ke', 'asc');
 			return $this->db->get('pembayaran')->result_array();
+		}
+
+		public function get_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
+		{
+			$this->db->select('*, detail_penjualan.tgl_diambil, (jumlah * profit_1) as laba, (jumlah * golongan_1) as total_harga_jual');
+			$this->db->where('id_pelanggan', $id_pelanggan);
+			$this->db->where('id_karyawan', $id_karyawan);
+			$this->db->where('jenis_paket', $jenis_paket);
+			$this->db->join('penjualan', 'faktur_penjualan');
+			$this->db->join('barang', 'id_barang');
+			$this->db->group_by('id_barang');
+			return $this->db->get('detail_penjualan')->result_array();
+		}
+
+		public function get_paket_tahunan($id_karyawan = '', $id_pelanggan = '', $jenis_paket)
+		{
+			$this->db->select('*');
+			if ($id_karyawan != '') {
+				$this->db->where('id_karyawan', $id_karyawan);
+			}
+			if ($id_pelanggan != '') {
+				$this->db->where('id_pelanggan', $id_pelanggan);
+			}
+			$this->db->where('jenis_paket', $jenis_paket);
+			$this->db->join('penjualan', 'faktur_penjualan');
+			$this->db->join('barang', 'id_barang');
+			$this->db->group_by('id_barang');
+			return $this->db->get('detail_penjualan')->result_array();
 		}
 
 

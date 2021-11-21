@@ -82,6 +82,17 @@
             </span>
           </div>
         </div>
+        <div class="form-group">
+          <div class="input-group input-group">
+            <select required="" name="jenis_paket" id="jenis_paket" class="form-control select2">
+              <option value="REGULAR" <?php echo $penjualan['jenis_paket'] == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
+              <option value="TAHUNAN" <?php echo $penjualan['jenis_paket'] == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
+            </select>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info btn-flat"><i class="fa fa-users"></i></button>
+            </span>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-2">
             <div class="form-group">

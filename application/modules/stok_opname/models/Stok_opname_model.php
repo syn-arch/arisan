@@ -7,11 +7,11 @@ class stok_opname_model extends CI_Model {
 	{
 		if ($id == '') {
 			$this->db->join('petugas', 'id_petugas');
-			$this->db->join('outlet', 'stok_opname.id_outlet=outlet.id_outlet');
+			$this->db->join('outlet', 'stok_opname.id_outlet=outlet.id_outlet', 'left');
 			return $this->db->get('stok_opname')->result_array();
 		}else {
 			$this->db->join('petugas', 'id_petugas');
-			$this->db->join('outlet', 'stok_opname.id_outlet=outlet.id_outlet');
+			$this->db->join('outlet', 'stok_opname.id_outlet=outlet.id_outlet', 'left');
 			$this->db->where('id_stok_opname', $id);
 			return $this->db->get('stok_opname')->row_array();
 		}
@@ -39,6 +39,17 @@ class stok_opname_model extends CI_Model {
 				'kerugian' => ($post['stok_komputer'][$i] - $post['stok_fisik'][$i]) * $harga_jual
 			];
 			$this->db->insert('detail_stok_opname', $data_detail);
+
+			if ($post['id_outlet'] == 'gudang') {
+				$this->db->set('stok', $post['stok_fisik'][$i]);
+				$this->db->where('id_barang', $post['id_barang'][$i]);
+				$this->db->update('barang');
+			}else{
+				$this->db->set('stok', $post['stok_fisik'][$i]);
+				$this->db->where('id_barang', $post['id_barang'][$i]);
+				$this->db->where('id_outlet', $post['id_outlet']);
+				$this->db->update('stok_outlet');
+			}
 		}
 
 		$this->db->select_sum('kerugian', 'total_kerugian');

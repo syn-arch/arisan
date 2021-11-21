@@ -11,6 +11,7 @@
               <div class="form-group <?php if(form_error('id_outlet')) echo 'has-error'?>">
                 <label for="id_outlet">Outlet</label>
                 <select name="id_outlet" id="id_outlet" class="form-control">
+                  <option value="gudang">Gudang</option>
                   <?php foreach ($outlet as $row): ?>
                     <option value="<?php echo $row['id_outlet'] ?>"><?php echo $row['nama_outlet'] ?></option>
                   <?php endforeach ?>
@@ -74,7 +75,7 @@
               </div>
               <div class="form-group <?php if(form_error('tgl')) echo 'has-error'?>">
                 <label for="tgl">Tanggal</label>
-                <input type="datetime-local" id="tgl" name="tgl" class="form-control tgl " placeholder="Tanggal">
+                <input type="datetime-local" id="tgl" name="tgl" class="form-control tgl " placeholder="Tanggal" value="<?php echo date('Y-m-d\TH:i:s') ?>">
                 <?php echo form_error('tgl', '<small style="color:red">','</small>') ?>
               </div>
               <div class="form-group <?php if(form_error('keterangan')) echo 'has-error'?>">

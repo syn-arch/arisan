@@ -19,6 +19,35 @@ class penjualan extends MX_Controller {
 		$this->load->model('kategori/kategori_model');
 	}
 
+	function ubah_keterangan(){
+
+		$id_karyawan = $this->input->post('id_karyawan');
+		$id_pelanggan = $this->input->post('id_pelanggan');
+		$keterangan = $this->input->post('keterangan');
+		$jenis_paket = $this->input->post('jenis_paket');
+		$id_barang = $this->input->post('id_barang');
+
+		$faktur_penjualan =  $this->db->get_where('penjualan', [
+			'id_karyawan' => $id_karyawan,
+			'id_pelanggan' => $id_pelanggan,
+			'jenis_paket' => $jenis_paket
+		])->row()->faktur_penjualan;
+
+
+		var_dump($this->input->post());
+
+		$this->db->set('keterangan', $keterangan);
+		if ($keterangan == 'BELUM DIAMBIL') {
+			$this->db->set('tgl_diambil', date('0000-00-00 00:00:00'));
+		}else{
+			$this->db->set('tgl_diambil', date('Y-m-d H:i:s'));
+		}
+		$this->db->where('faktur_penjualan', $faktur_penjualan);
+		$this->db->where('id_barang', $id_barang);
+		$this->db->update('detail_penjualan');
+		
+	}
+
 	public function verify_password()
 	{
 		$password = $this->input->post('password');
@@ -91,23 +120,23 @@ class penjualan extends MX_Controller {
 
 		$this->db->where('id_outlet', $id_outlet);
 		$data['karyawan'] = $this->db->get('karyawan')->result_array();
-        $data['kategori'] = $this->kategori_model->get_kategori();
+		$data['kategori'] = $this->kategori_model->get_kategori();
 
-        $faktur_id = 'SL-' . acak(10);
+		$faktur_id = 'SL-' . acak(10);
 
-        if ($this->db->get_where('penjualan', ['faktur_penjualan' => $faktur_id])->row_array()) {
-            $id_faktur = 'SL-' . acak(10);
-            if ($this->db->get_where('penjualan', ['faktur_penjualan' => $id_faktur])->row_array()) {
-                $id_faktur = 'SL-' . acak(10);
-                if ($this->db->get_where('penjualan', ['faktur_penjualan' => $id_faktur])->row_array()) {
-                    $id_faktur = 'SL-' . acak(10);
-                }
-            }
-        }else{
-            $id_faktur = $faktur_id;
-        }
+		if ($this->db->get_where('penjualan', ['faktur_penjualan' => $faktur_id])->row_array()) {
+			$id_faktur = 'SL-' . acak(10);
+			if ($this->db->get_where('penjualan', ['faktur_penjualan' => $id_faktur])->row_array()) {
+				$id_faktur = 'SL-' . acak(10);
+				if ($this->db->get_where('penjualan', ['faktur_penjualan' => $id_faktur])->row_array()) {
+					$id_faktur = 'SL-' . acak(10);
+				}
+			}
+		}else{
+			$id_faktur = $faktur_id;
+		}
 
-        $data['faktur_penjualan'] = $id_faktur;
+		$data['faktur_penjualan'] = $id_faktur;
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('penjualan/index', $data, FALSE);
@@ -285,7 +314,7 @@ class penjualan extends MX_Controller {
 
 		$total_belanja = $this->penjualan_model->get_total_belanja($id);
 		$penjualan = $this->penjualan_model->get_penjualan($id);
-        $total_bayar = $this->penjualan_model->get_total_bayar($id);
+		$total_bayar = $this->penjualan_model->get_total_bayar($id);
 
 		try {
 			
