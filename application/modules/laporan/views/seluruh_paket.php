@@ -7,6 +7,18 @@
                         <h4><?php echo $judul ?></h4>
                     </div>
                 </div>
+                <div class="pull-right">
+                    <?php if ($this->input->get('dari')): ?>
+                    <a href="<?php echo base_url('laporan/cetak_seluruh_paket/' . 
+                    $this->input->get('dari') . '/' . 
+                    $this->input->get('sampai') . '/' . 
+                    $this->input->get('periode') . '/' . 
+                    $this->input->get('id_pelanggan') . '/' . 
+                    $this->input->get('id_karyawan') . '/' . 
+                    $this->input->get('jenis_paket')
+                    ) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                    <?php endif ?>
+                </div>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -30,24 +42,16 @@
                             <div class="form-group">
                                 <label for="">Agen</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
-                                    <option value="">Semua Agen</option>
+                                    <option value="semua">Semua Agen</option>
                                     <?php foreach ($karyawan as $row): ?>
                                         <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
-                             <div class="form-group">
-                                <label for="">Telepon</label>
-                                <input type="text" class="form-control telepon_karyawan" placeholder="Telepon Agen" readonly value="<?php echo $this->input->get('id_karyawan')  != '' ? $agen['telepon'] : '' ?>"> 
-                            </div>
-                            <div class="form-group">
-                                <label for="">Alamat</label>
-                                <input type="text" class="form-control alamat_karyawan" placeholder="Alamat Agen" readonly value="<?php echo $this->input->get('id_karyawan') != '' ? $agen['alamat'] : '' ?>"> 
-                            </div>
                             <div class="form-group">
                                 <label for="">Kelompok</label>
                                 <select name="id_pelanggan" id="id_pelanggan" class="form-control">
-                                    <option value="">Semua Kelompok</option>
+                                    <option value="semua">Semua Kelompok</option>
                                     <?php foreach ($pelanggan as $row): ?>
                                         <option value="<?php echo $row['id_pelanggan'] ?>" <?php echo $this->input->get('id_pelanggan') == $row['id_pelanggan'] ? 'selected' : '' ?>><?php echo $row['nama_pelanggan'] ?></option>
                                     <?php endforeach ?>
@@ -69,7 +73,7 @@
                 <br><br>
                 <?php if ($this->input->get('dari')): ?>
 
-                    <?php if ($this->input->get('id_karyawan')): ?>
+                    <?php if ($this->input->get('id_karyawan') != 'semua'): ?>
                         <div class="row">
                             <div class="col-md-6">
                                 <table class="table">
@@ -90,7 +94,7 @@
                         </div>
                     <?php endif ?>
 
-                    <?php if ($this->input->get('id_pelanggan')): ?>
+                    <?php if ($this->input->get('id_pelanggan') != 'semua'): ?>
                         <div class="row">
                             <div class="col-md-6">
                                 <table class="table">

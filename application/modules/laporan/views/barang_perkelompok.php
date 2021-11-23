@@ -7,6 +7,16 @@
                         <h4><?php echo $judul ?></h4>
                     </div>
                 </div>
+                <div class="pull-right">
+                    <?php if ($this->input->get('id_karyawan')): ?>
+                        
+                        <a href="<?php echo base_url('laporan/cetaK_barang_perkelompok/' . 
+                        $this->input->get('id_karyawan') . '/' . 
+                        $this->input->get('id_pelanggan') . '/' . 
+                        $this->input->get('jenis_paket')
+                        ) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                    <?php endif ?>
+                </div>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -19,14 +29,6 @@
                                         <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
                                     <?php endforeach ?>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Telepon</label>
-                                <input type="text" class="form-control telepon_karyawan" placeholder="Telepon Agen" readonly value="<?php echo $this->input->get('id_karyawan')  != '' ? $agen['telepon'] : '' ?>"> 
-                            </div>
-                            <div class="form-group">
-                                <label for="">Alamat</label>
-                                <input type="text" class="form-control alamat_karyawan" placeholder="Alamat Agen" readonly value="<?php echo $this->input->get('id_karyawan') != '' ? $agen['alamat'] : '' ?>"> 
                             </div>
                             <div class="form-group">
                                 <label for="">Kelompok</label>
@@ -55,7 +57,7 @@
                         <div class="col-md-6">
                             <table class="table">
                                 <tr>
-                                    <td>Nama</td>
+                                    <td>Nama Kelompok</td>
                                     <td><?php echo $kelompok['nama_pelanggan'] ?></td>
                                 </tr>
                                 <tr>
@@ -68,11 +70,27 @@
                                 </tr>
                                 <tr>
                                     <td>Nominal Kocokan</td>
-                                    <td><?php echo ($laporan['0']['kocokan']) ?></td>
+                                    <td><?php echo ($laporan['0']['kocokan'] ?? 0) ?></td>
                                 </tr>
                                 <tr>
                                     <td>Total Bayar</td>
-                                    <td><?php echo number_format($laporan['0']['total_bayar']) ?></td>
+                                    <td><?php echo number_format($laporan['0']['total_bayar'] ?? 0) ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table">
+                                <tr>
+                                    <td>Nama Agen</td>
+                                    <td><?php echo $agen['nama_karyawan'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat</td>
+                                    <td><?php echo $agen['alamat'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Telepon</td>
+                                    <td><?php echo $agen['telepon'] ?></td>
                                 </tr>
                             </table>
                         </div>

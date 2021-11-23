@@ -19,7 +19,7 @@
                    <div class="col-md-8">
                        <form method="POST" enctype="multipart/form-data">
                         <div class="form-group <?php if(form_error('id_pelanggan')) echo 'has-error'?>">
-                          <label for="id_pelanggan">ID pelanggan</label>
+                          <label for="id_pelanggan">ID Kelompok</label>
                           <input readonly="" type="text" id="id_pelanggan" name="id_pelanggan" class="form-control id_pelanggan " placeholder="ID pelanggan" value="<?php echo autoIDPelanggan() ?>">
                           <?php echo form_error('id_pelanggan', '<small style="color:red">','</small>') ?>
                         </div>
@@ -29,8 +29,8 @@
                           <?php echo form_error('barcode', '<small style="color:red">','</small>') ?>
                         </div>
                            <div class="form-group <?php if(form_error('nama_pelanggan')) echo 'has-error'?>">
-                               <label for="nama_pelanggan">Nama pelanggan</label>
-                               <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control nama_pelanggan" placeholder="Nama pelanggan" value="<?php echo set_value('nama_pelanggan') ?>">
+                               <label for="nama_pelanggan">Nama Kelompok</label>
+                               <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control nama_pelanggan" placeholder="Nama Kelompok" value="<?php echo set_value('nama_pelanggan') ?>">
                                <?php echo form_error('nama_pelanggan', '<small style="color:red">','</small>') ?>
                            </div>
                            <div class="form-group <?php if(form_error('jk')) echo 'has-error'?>">

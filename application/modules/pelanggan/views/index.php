@@ -21,7 +21,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama pelanggan</th>
+                                <th>Nama Kelompok</th>
                                 <th>Alamat</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Telepon</th>

@@ -7,6 +7,9 @@
                         <h4><?php echo $judul ?></h4>
                     </div>
                 </div>
+                <div class="pull-right">
+                    <a href="<?php echo base_url('laporan/cetak_transaksi/' . $this->input->get('dari') . '/' . $this->input->get('sampai')) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                </div>
             </div>
             <div class="box-body">
                 <div class="row">

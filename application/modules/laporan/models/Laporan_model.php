@@ -881,10 +881,10 @@ class laporan_model extends CI_Model {
 				$this->db->where('DATE(penjualan.tgl) >=', $dari);
 				$this->db->where('DATE(penjualan.tgl) <=', $sampai);
 			}
-			if ($id_karyawan != '') {
+			if ($id_karyawan != 'semua') {
 				$this->db->where('id_karyawan', $id_karyawan);
 			}
-			if ($id_pelanggan != '') {
+			if ($id_pelanggan != 'semua') {
 				$this->db->where('id_pelanggan', $id_pelanggan);
 			}
 			$this->db->where('jenis_paket', $jenis_paket);
@@ -918,10 +918,10 @@ class laporan_model extends CI_Model {
 		public function get_paket_tahunan($id_karyawan = '', $id_pelanggan = '', $jenis_paket)
 		{
 			$this->db->select('*');
-			if ($id_karyawan != '') {
+			if ($id_karyawan != 'semua') {
 				$this->db->where('id_karyawan', $id_karyawan);
 			}
-			if ($id_pelanggan != '') {
+			if ($id_pelanggan != 'semua') {
 				$this->db->where('id_pelanggan', $id_pelanggan);
 			}
 			$this->db->where('jenis_paket', $jenis_paket);

@@ -1,4 +1,31 @@
-<div class="row">
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="base_url" content="<?php echo base_url() ?>">
+  <title><?php echo $judul ?></title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="icon" href="<?php echo base_url('assets/img/favicon.png') ?>" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>bower_components/Ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>bower_components/select2/dist/css/select2.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>dist/css/skins/skin-red.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body onload="window.print()">
+  <div class="container">
+    <div class="row">
     <div class="col-xs-12">
         <div class="box box-danger">
             <div class="box-header with-border">
@@ -7,54 +34,10 @@
                         <h4><?php echo $judul ?></h4>
                     </div>
                 </div>
-                <div class="pull-right">
-                    <?php if ($this->input->get('jenis_paket')): ?>
-                        <a href="<?php echo base_url('laporan/cetak_paket_tahunan/' . 
-                        $this->input->get('id_karyawan') . '/' . 
-                        $this->input->get('id_pelanggan') . '/' . 
-                        $this->input->get('jenis_paket')
-                        ) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
-                    <?php endif ?>
-                </div>  
             </div>
             <div class="box-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <form action="">
-                            <div class="form-group">
-                                <label for="">Agen</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
-                                    <option value="semua" <?php echo $this->input->get('id_karyawan') == 'semua' ? 'selected' : '' ?>>SEMUA</option>
-                                    <?php foreach ($karyawan as $row): ?>
-                                        <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Kelompok</label>
-                                <select name="id_pelanggan" id="id_pelanggan" class="form-control">
-                                    <option value="semua" <?php echo $this->input->get('id_pelanggan') == 'semua' ? 'selected' : '' ?>>SEMUA</option>
-                                    <?php foreach ($pelanggan as $row): ?>
-                                        <option value="<?php echo $row['id_pelanggan'] ?>" <?php echo $this->input->get('id_pelanggan') == $row['id_pelanggan'] ? 'selected' : '' ?>><?php echo $row['nama_pelanggan'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Jenis Paket</label>
-                                <select name="jenis_paket" id="jenis_paket" class="form-control">
-                                    <option value="REGULAR" <?php echo $this->input->get('jenis_paket') == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
-                                    <option value="TAHUNAN" <?php echo $this->input->get('jenis_paket') == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-danger btn-block">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <br><br>
-                <?php if ($this->input->get('id_pelanggan')): ?>
-                <?php if ($this->input->get('id_pelanggan') != 'semua'): ?>
+
+                <?php if ($this->uri->segment(4) != 'semua'): ?>
                     <div class="row">
                         <div class="col-md-6">
                             <table class="table">
@@ -82,11 +65,8 @@
                         </div>
                     </div>
                 <?php endif ?>
-                <?php endif ?>
 
-                <?php if ($this->input->get('id_karyawan')): ?>
-                    
-                <?php if ($this->input->get('id_karyawan') != 'semua'): ?>
+                <?php if ($this->uri->segment(3) != 'semua'): ?>
                     <div class="row">
                         <div class="col-md-6">
                             <table class="table">
@@ -106,9 +86,8 @@
                         </div>
                     </div>
                 <?php endif ?>
-                <?php endif ?>
 
-                <?php if ($this->input->get('jenis_paket')): ?>
+                <?php if ($this->uri->segment(5)): ?>
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped" cellspacing="0" width="100%" id="table-riwayat-penjualan">
@@ -140,3 +119,7 @@
         </div>
     </div>
 </div>
+
+  </div>
+</body>
+</html>

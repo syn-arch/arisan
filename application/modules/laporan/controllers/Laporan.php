@@ -414,6 +414,21 @@ class laporan extends MX_Controller {
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 
+	public function cetak_pembelian($dari = '', $sampai ='')
+	{
+		if ($dari != '') {
+			$data['laporan'] = $this->laporan_model->get_all_pembelian($dari,$sampai);
+			$data['total_pembelian'] = $this->laporan_model->get_total_pembelian($dari,$sampai);
+		}else{
+			$data['laporan'] = $this->laporan_model->get_all_pembelian();
+			$data['total_pembelian'] = $this->laporan_model->get_total_pembelian();
+		}
+
+		$data['judul'] = "Laporan Pembelian";
+
+		$this->load->view('laporan/cetak_pembelian', $data, FALSE);
+	}
+
 	public function hutang()
 	{
 		$data['judul'] = "Laporan Hutang";
@@ -525,6 +540,15 @@ class laporan extends MX_Controller {
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 
+	public function cetak_transaksi($dari = '' , $sampai = '')
+	{
+		$data['judul'] = "Laporan Transaksi";
+
+		$data['laporan'] = $this->laporan_model->get_transaksi($dari, $sampai);
+
+		$this->load->view('laporan/cetak_transaksi', $data, FALSE);
+	}
+
 	public function seluruh_paket()
 	{
 		$data['judul'] = "Laporan Seluruh Paket";
@@ -552,6 +576,25 @@ class laporan extends MX_Controller {
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 
+
+	public function cetak_seluruh_paket($dari = '',$sampai = '',$periode = '',$id_pelanggan = '',$id_karyawan = '',$jenis_paket = '' )
+	{
+		$data['judul'] = "Laporan Seluruh Paket";
+
+		$data['laporan'] = $this->laporan_model->get_seluruh_paket($dari, $sampai, $periode, $id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['karyawan'] = $this->karyawan_model->get_karyawan();
+		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
+
+		if ($id_pelanggan) {
+			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
+		}
+		if ($id_karyawan) {
+			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
+		}
+
+		$this->load->view('laporan/cetak_seluruh_paket', $data, FALSE);
+	}
+
 	public function per_kelompok()
 	{
 		$data['judul'] = "Laporan Perkelompok";
@@ -574,6 +617,24 @@ class laporan extends MX_Controller {
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('laporan/per_kelompok', $data, FALSE);
 		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+	public function cetak_per_kelompok($id_karyawan, $id_pelanggan, $jenis_paket)
+	{
+		$data['judul'] = "Laporan Perkelompok";
+
+		$data['laporan'] = $this->laporan_model->get_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['karyawan'] = $this->karyawan_model->get_karyawan();
+		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
+
+		if ($id_pelanggan) {
+			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
+		}
+		if ($id_karyawan) {
+			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
+		}
+
+		$this->load->view('laporan/cetak_per_kelompok', $data, FALSE);
 	}
 
 	public function barang_perkelompok()
@@ -600,6 +661,24 @@ class laporan extends MX_Controller {
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 
+	public function cetak_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
+	{
+		$data['judul'] = "Laporan Barang Perkelompok";
+
+		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['karyawan'] = $this->karyawan_model->get_karyawan();
+		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
+
+		if ($id_pelanggan) {
+			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
+		}
+		if ($id_karyawan) {
+			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
+		}
+
+		$this->load->view('laporan/cetak_barang_perkelompok', $data, FALSE);
+	}
+
 
 	public function paket_tahunan()
 	{
@@ -613,16 +692,34 @@ class laporan extends MX_Controller {
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 
-		if ($id_pelanggan) {
+		if ($id_pelanggan != 'semua') {
 			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
 		}
-		if ($id_karyawan) {
+		if ($id_karyawan != 'semua') {
 			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
 		}
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('laporan/paket_tahunan', $data, FALSE);
 		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+
+	public function cetak_paket_tahunan($id_karyawan, $id_pelanggan, $jenis_paket)
+	{
+		$data['judul'] = "Laporan Paket Tahunan";
+		$data['laporan'] = $this->laporan_model->get_paket_tahunan($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['karyawan'] = $this->karyawan_model->get_karyawan();
+		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
+
+		if ($id_pelanggan != 'semua') {
+			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
+		}
+		if ($id_karyawan != 'semua') {
+			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
+		}
+
+		$this->load->view('laporan/cetak_paket_tahunan', $data, FALSE);
 	}
 
 	public function cetak_laba_rugi($dari, $sampai, $id_outlet = '')

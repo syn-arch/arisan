@@ -37,7 +37,7 @@ class pelanggan extends MX_Controller {
 
 	public function index()
 	{
-		$data['judul'] = "Data Pelanggan";
+		$data['judul'] = "Data Kelompok";
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('pelanggan/index', $data, FALSE);
@@ -59,7 +59,7 @@ class pelanggan extends MX_Controller {
 			redirect('master/pelanggan','refresh');
 		}
 
-		$data['judul'] = "Tambah pelanggan";
+		$data['judul'] = "Tambah Kelompok";
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('pelanggan/tambah', $data, FALSE);
@@ -93,7 +93,7 @@ class pelanggan extends MX_Controller {
 			redirect('master/pelanggan','refresh');
 		}
 
-		$data['judul'] = "Ubah pelanggan";
+		$data['judul'] = "Ubah Kelompok";
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan($id);
 
 		$this->load->view('templates/header', $data, FALSE);
