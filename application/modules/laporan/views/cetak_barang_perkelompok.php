@@ -119,6 +119,7 @@
                     $this->db->where('id_pelanggan', $this->uri->segment(4));
                     $this->db->where('id_karyawan', $this->uri->segment(3));
                     $this->db->where('jenis_paket', $this->uri->segment(5));
+                    $this->db->where('keterangan', 'DIAMBIL');
                     $this->db->join('barang', 'id_barang');
                     $this->db->join('penjualan', 'faktur_penjualan');
                     $total_harga_pokok = $this->db->get('detail_penjualan')->row()->total_harga_pokok;
@@ -127,6 +128,7 @@
                     $this->db->where('id_pelanggan', $this->uri->segment(4));
                     $this->db->where('id_karyawan', $this->uri->segment(3));
                     $this->db->where('jenis_paket', $this->uri->segment(5));
+                    $this->db->where('keterangan', 'DIAMBIL');
                     $this->db->join('barang', 'id_barang');
                     $this->db->join('penjualan', 'faktur_penjualan');
                     $total_harga_jual = $this->db->get('detail_penjualan')->row()->total_harga_jual;
@@ -135,6 +137,7 @@
                     $this->db->where('id_pelanggan', $this->uri->segment(4));
                     $this->db->where('id_karyawan', $this->uri->segment(3));
                     $this->db->where('jenis_paket', $this->uri->segment(5));
+                    $this->db->where('keterangan', 'DIAMBIL');
                     $this->db->join('barang', 'id_barang');
                     $this->db->join('penjualan', 'faktur_penjualan');
                     $total_harga_laba = $this->db->get('detail_penjualan')->row()->total_harga_laba;
@@ -143,6 +146,7 @@
                     $this->db->where('id_pelanggan', $this->uri->segment(4));
                     $this->db->where('id_karyawan', $this->uri->segment(3));
                     $this->db->where('jenis_paket', $this->uri->segment(5));
+                    $this->db->where('keterangan', 'DIAMBIL');
                     $this->db->join('barang', 'id_barang');
                     $this->db->join('penjualan', 'faktur_penjualan');
                     $total_jual = $this->db->get('detail_penjualan')->row()->total_jual;

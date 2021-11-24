@@ -665,7 +665,7 @@ class laporan extends MX_Controller {
 	{
 		$data['judul'] = "Laporan Barang Perkelompok";
 
-		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket, true);
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 

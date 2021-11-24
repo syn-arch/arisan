@@ -903,12 +903,15 @@ class laporan_model extends CI_Model {
 			return $this->db->get('pembayaran')->result_array();
 		}
 
-		public function get_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
+		public function get_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '', $ket = false)
 		{
 			$this->db->select('*, detail_penjualan.tgl_diambil, (jumlah * profit_1) as laba, (jumlah * golongan_1) as total_harga_jual');
 			$this->db->where('id_pelanggan', $id_pelanggan);
 			$this->db->where('id_karyawan', $id_karyawan);
 			$this->db->where('jenis_paket', $jenis_paket);
+			if ($ket == true) {
+				$this->db->where('keterangan', 'DIAMBIL');
+			}
 			$this->db->join('penjualan', 'faktur_penjualan');
 			$this->db->join('barang', 'id_barang');
 			$this->db->group_by('id_barang');
