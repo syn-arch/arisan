@@ -37,35 +37,6 @@
             </div>
             <div class="box-body">
 
-                <?php if ($this->uri->segment(4) != 'semua'): ?>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <table class="table">
-                                <tr>
-                                    <td>Nama Kelompok</td>
-                                    <td><?php echo $kelompok['nama_pelanggan'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td><?php echo $kelompok['alamat'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Telepon</td>
-                                    <td><?php echo $kelompok['telepon'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Nominal Kocokan</td>
-                                    <td><?php echo ($laporan['0']['kocokan'] ?? 0) ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Total Bayar</td>
-                                    <td><?php echo number_format($laporan['0']['total_bayar'] ?? 0) ?></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                <?php endif ?>
-
                 <?php if ($this->uri->segment(3) != 'semua'): ?>
                     <div class="row">
                         <div class="col-md-6">
@@ -81,6 +52,27 @@
                                 <tr>
                                     <td>Telepon</td>
                                     <td><?php echo $agen['telepon'] ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                <?php endif ?>
+
+                <?php if ($this->uri->segment(4) != 'semua'): ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table">
+                                <tr>
+                                    <td>Kelompok/Paket</td>
+                                    <td><?php echo $kelompok['nama_pelanggan'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Nominal Kocokan</td>
+                                    <td><?php echo ($laporan['0']['kocokan'] ?? 0) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Bayar</td>
+                                    <td><?php echo number_format($laporan['0']['total_bayar'] ?? 0) ?></td>
                                 </tr>
                             </table>
                         </div>

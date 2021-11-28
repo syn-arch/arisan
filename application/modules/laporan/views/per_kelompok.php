@@ -57,16 +57,20 @@
                         <div class="col-md-6">
                             <table class="table">
                                 <tr>
-                                    <td>Nama Kelompok</td>
+                                    <td>Kelompok/Paket</td>
                                     <td><?php echo $kelompok['nama_pelanggan'] ?></td>
+                                </tr>
+                                 <tr>
+                                    <td>Nama Agen</td>
+                                    <td><?php echo $agen['nama_karyawan'] ?></td>
                                 </tr>
                                 <tr>
                                     <td>Alamat</td>
-                                    <td><?php echo $kelompok['alamat'] ?></td>
+                                    <td><?php echo $agen['alamat'] ?></td>
                                 </tr>
                                 <tr>
                                     <td>Telepon</td>
-                                    <td><?php echo $kelompok['telepon'] ?></td>
+                                    <td><?php echo $agen['telepon'] ?></td>
                                 </tr>
                                 <tr>
                                     <td>Nominal Kocokan</td>
@@ -80,18 +84,7 @@
                         </div>
                         <div class="col-md-6">
                             <table class="table">
-                                <tr>
-                                    <td>Nama Agen</td>
-                                    <td><?php echo $agen['nama_karyawan'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td><?php echo $agen['alamat'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Telepon</td>
-                                    <td><?php echo $agen['telepon'] ?></td>
-                                </tr>
+                               
                             </table>
                         </div>
                     </div>
