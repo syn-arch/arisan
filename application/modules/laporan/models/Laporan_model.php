@@ -920,7 +920,7 @@ class laporan_model extends CI_Model {
 
 		public function get_paket_tahunan($id_karyawan = '', $id_pelanggan = '', $jenis_paket)
 		{
-			$this->db->select('*');
+			$this->db->select('nama_barang,satuan,sum(jumlah) as jumlah');
 			if ($id_karyawan != 'semua') {
 				$this->db->where('id_karyawan', $id_karyawan);
 			}
