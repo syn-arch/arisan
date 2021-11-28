@@ -29,7 +29,8 @@
                                 <th>Satuan</th>
                                 <th>Harga Pokok</th>
                                 <th>Harga Jual</th>
-                                <th>Stok (Gudang)</th>
+                                <th>Laba</th>
+                                <th>Stok</th>
                                 <th>Diskon</th>
                                 <th><i class="fa fa-cogs"></i></th>
                             </tr>

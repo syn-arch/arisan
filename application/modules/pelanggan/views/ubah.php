@@ -52,15 +52,7 @@
                                <input type="text" id="telepon" name="telepon" class="form-control telepon " placeholder="Telepon" value="<?php echo $pelanggan['telepon'] ?>">
                                <?php echo form_error('telepon', '<small style="color:red">','</small>') ?>
                            </div>
-                           <div class="form-group <?php if(form_error('jenis')) echo 'has-error'?>">
-                               <label for="jenis">Jenis Pelanggan</label><br>
-                               <select name="jenis" id="jenis" class="form-control">
-                                   <option value="">-- Silahkan Pilih Jenis Pelanggan --</option>
-                                   <option value="umum" <?php echo $pelanggan['jenis']== "umum" ? 'selected' : '' ?>>Umum</option>
-                                   <option value="member" <?php echo $pelanggan['jenis']== "member" ? 'selected' : '' ?>>Member</option>
-                               </select>
-                               <?php echo form_error('jenis', '<small style="color:red">','</small>') ?>
-                           </div>
+                           <input type="hidden" name="jenis" value="umum">
                            <div class="form-group">
                                <button type="submit" class="btn btn-danger btn-block">Submit</button>
                            </div>

@@ -52,7 +52,7 @@
           <div class="input-group input-group">
             <select required="" name="id_karyawan" id="id_karyawan" class="form-control select2 karyawan karyawan-wrapper" width="100%">
               <?php foreach ($karyawan as $row): ?>
-                <option <?php echo $this->session->userdata('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?> value="<?php echo $row['id_karyawan'] ?>"><?php echo $row['nama_karyawan'] ?></option>
+                <option value="<?php echo $row['id_karyawan'] ?>"><?php echo $row['nama_karyawan'] ?></option>
               <?php endforeach ?>
             </select>
             <span class="input-group-btn">
@@ -133,15 +133,7 @@
               </tr>
               <input type="hidden" name="metode_pembayaran">
               <input type="hidden" name="tgl_jatuh_tempo">
-              <tr>
-                <th>Periode</th>
-                <td colspan="2">
-                  <select name="periode" id="periode" class="form-control">
-                    <option value="15">15</option>
-                    <option value="17">17</option>
-                  </select>
-                </td>
-              </tr>
+              <input type="hidden" name="periode" value="17">
               <tr>
                 <th>Nominal Kocokan</th>
                 <td colspan="2">

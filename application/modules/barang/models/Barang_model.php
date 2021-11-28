@@ -13,7 +13,7 @@ class barang_model extends CI_Model {
 			$id_outlet = $this->db->get('outlet')->row()->id_outlet;
 		}
 
-		$this->datatables->select('id_barang, barcode,nama_barang, diskon, harga_pokok, nama_kategori, nama_supplier,golongan_1, satuan,barang.stok AS stok,diskon, stok_outlet.stok AS stok_q');
+		$this->datatables->select('id_barang, barcode,nama_barang, diskon, harga_pokok, nama_kategori, nama_supplier,golongan_1, satuan,barang.stok AS stok,diskon, stok_outlet.stok AS stok_q,profit_1');
 		$this->datatables->from('stok_outlet');
 		$this->datatables->join('barang', 'id_barang');
 		$this->datatables->join('kategori', 'barang.id_kategori=kategori.id_kategori', 'left');
@@ -56,15 +56,14 @@ class barang_model extends CI_Model {
 		if ($id == '') {
 			$this->db->select('* ,'. $golongan .' AS harga_jual, barang.stok AS stok, stok_outlet.stok AS stok_outlet');
 			$this->db->join('kategori', 'id_kategori', 'left');
-            $this->db->join('supplier', 'id_supplier', 'left');
-            $this->db->join('stok_outlet', 'id_barang');
+			$this->db->join('supplier', 'id_supplier', 'left');
+			$this->db->join('stok_outlet', 'id_barang');
 			return $this->db->get('barang')->result_array();
 		}else {
-			if ($golongan != '') {
-				$this->db->select('* ,'. $golongan .' AS harga_jual');
-			}
+			$this->db->select('* ,'. $golongan .' AS harga_jual, stok_outlet.stok');
 			$this->db->join('kategori', 'id_kategori', 'left');
 			$this->db->join('supplier', 'id_supplier', 'left');
+			$this->db->join('stok_outlet', 'id_barang');
 			$this->db->where('id_barang', $id);
 			$this->db->or_where('barcode', $id);
 			return $this->db->get('barang')->row_array();
@@ -104,8 +103,8 @@ class barang_model extends CI_Model {
 		if ($post['golongan_4'] < $post['harga_pokok'] && $post['golongan_4'] != 0) {
 			$this->session->set_flashdata('error', 'golongan 4 kurang dari harga pokok');
 			redirect('master/barang','refresh');
-        }
-        
+		}
+
 		$data = [
 			'id_barang' => htmlspecialchars($post['id_barang']),
 			'nama_barang' => htmlspecialchars($post['nama_barang']),

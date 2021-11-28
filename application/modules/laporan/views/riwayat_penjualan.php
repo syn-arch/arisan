@@ -7,9 +7,6 @@
                         <h4><?php echo $judul ?></h4>
                     </div>
                 </div>
-                <div class="pull-right">
-                    <a href="javascrip:void(0)" class="btn btn-danger hapus_bulk_riwayat_penjualan"><i class="fa fa-trash"></i> Hapus</a>
-                </div>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -68,8 +65,14 @@
                                         <td><?php echo $row['nama_karyawan'] ?></td>
                                         <td><?php echo $row['nama_pelanggan'] ?></td>
                                         <td><?php echo number_format($row['total_bayar']) ?></td>
-                                        <td><?php echo number_format($row['cash']) ?></td>
-                                        <td><?php echo number_format($row['sisa_bayar']) ?></td>
+                                        <td><?php 
+                                        $this->db->select('sum(nominal) as total');
+                                        $this->db->where('faktur_penjualan', $row['faktur_penjualan']);
+                                        $this->db->where('status_bayar', 'SUDAH BAYAR');
+                                        $cash = $this->db->get('pembayaran')->row()->total ?? 0;
+                                        echo number_format($cash);
+                                        ?></td>
+                                        <td><?php echo number_format($row['total_bayar'] - $cash) ?></td>
                                         <td><?php echo ($row['jenis_paket']) ?></td>
                                         <?php if ($row['status'] == 'Lunas'): ?>
                                             <td> <button class="btn btn-success"><?php echo $row['status'] ?></button></td>

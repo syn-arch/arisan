@@ -25,7 +25,6 @@
                                 <th>Alamat</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Telepon</th>
-                                <th>Jenis</th>
                                 <th><i class="fa fa-cogs"></i></th>
                             </tr>
                         </thead>

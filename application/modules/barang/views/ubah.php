@@ -66,14 +66,14 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="golongan_1">Golongan 1</label>
+            <label for="golongan_1">Harga Jual</label>
             <input autocomplete="off" type="number" id="golongan_1" name="golongan_1" class="form-control golongan_1 <?php if(form_error('golongan_1')) echo 'is-invalid'?>" placeholder="Golongan 1" value="<?php echo $barang['golongan_1'] ?>">
             <?php echo form_error('golongan_1', '<small style="color:red">','</small>') ?>
           </div>
         </div>  
         <div class="col-md-4">
           <div class="form-group">
-            <label for="profit_1">Profit 1</label>
+            <label for="profit_1">Laba</label>
             <input autocomplete="off" readonly="" type="number" id="profit_1" name="profit_1" class="form-control profit_1 <?php if(form_error('profit_1')) echo 'is-invalid'?>" placeholder="Profit 1" value="<?php echo $barang['profit_1'] ?>">
             <?php echo form_error('profit_1', '<small style="color:red">','</small>') ?>
           </div>
@@ -81,85 +81,23 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="qty_1">Qty 1</label>
-            <input autocomplete="off" type="text" id="qty_1" name="qty_1" class="form-control qty_1 <?php if(form_error('qty_1')) echo 'is-invalid'?>" placeholder="Qty 1" value="<?php echo $barang['qty_1'] ?>">
+            <input readonly autocomplete="off" type="text" id="qty_1" name="qty_1" class="form-control qty_1 <?php if(form_error('qty_1')) echo 'is-invalid'?>" placeholder="Qty 1" value="<?php echo $barang['qty_1'] ?>">
             <?php echo form_error('qty_1', '<small style="color:red">','</small>') ?>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="golongan_2">Golongan 2</label>
-            <input autocomplete="off" type="number" id="golongan_2" name="golongan_2" class="form-control golongan_2 <?php if(form_error('golongan_2')) echo 'is-invalid'?>" placeholder="Golongan 2" value="<?php echo $barang['golongan_2'] ?>">
-            <?php echo form_error('golongan_2', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>  
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="profit_2">Profit 2</label>
-            <input autocomplete="off" readonly="" type="number" id="profit_2" name="profit_2" class="form-control profit_2 <?php if(form_error('profit_2')) echo 'is-invalid'?>" placeholder="Profit 2" value="<?php echo $barang['profit_2'] ?>">
-            <?php echo form_error('profit_2', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="qty_2">Qty 2</label>
-            <input autocomplete="off" type="text" id="qty_2" name="qty_2" class="form-control qty_2 <?php if(form_error('qty_2')) echo 'is-invalid'?>" placeholder="Qty 2" value="<?php echo $barang['qty_2'] ?>">
-            <?php echo form_error('qty_2', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="golongan_3">Golongan 3</label>
-            <input autocomplete="off" type="number" id="golongan_3" name="golongan_3" class="form-control golongan_3 <?php if(form_error('golongan_3')) echo 'is-invalid'?>" placeholder="Golongan 3" value="<?php echo $barang['golongan_3'] ?>">
-            <input type="hidden" name="g3" class="golongan_3_hidden" value="<?php echo $barang['golongan_3'] ?>">
-            <?php echo form_error('golongan_3', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>  
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="profit_3">Profit 3</label>
-            <input autocomplete="off" readonly="" type="number" id="profit_3" name="profit_3" class="form-control profit_3 <?php if(form_error('profit_3')) echo 'is-invalid'?>" placeholder="Profit 3" value="<?php echo $barang['profit_3'] ?>">
-            <?php echo form_error('profit_3', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="qty_3">Qty 3</label>
-            <input autocomplete="off" type="text" id="qty_3" name="qty_3" class="form-control qty_3 <?php if(form_error('qty_3')) echo 'is-invalid'?>" placeholder="Qty 3" value="<?php echo $barang['qty_3'] ?>">
-            <input type="hidden" name="q3" class="qty_3_hidden" value="<?php echo $barang['qty_3'] ?>">
-            <?php echo form_error('qty_3', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="golongan_4">Golongan 4</label>
-            <input autocomplete="off" type="number" id="golongan_4" name="golongan_4" class="form-control golongan_4 <?php if(form_error('golongan_4')) echo 'is-invalid'?>" placeholder="Golongan 4" value="<?php echo $barang['golongan_4'] ?>">
-            <?php echo form_error('golongan_4', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>  
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="profit_4">Profit 4</label>
-            <input autocomplete="off" readonly="" type="number" id="profit_4" name="profit_4" class="form-control profit_4 <?php if(form_error('profit_4')) echo 'is-invalid'?>" placeholder="Profit 4" value="<?php echo $barang['profit_4'] ?>">
-            <?php echo form_error('profit_4', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="qty_4">Qty 4</label>
-            <input autocomplete="off" type="text" id="qty_4" name="qty_4" class="form-control qty_4 <?php if(form_error('qty_4')) echo 'is-invalid'?>" placeholder="Qty 4" value="<?php echo $barang['qty_4'] ?>">
-            <?php echo form_error('qty_4', '<small style="color:red">','</small>') ?>
-          </div>
-        </div>
-      </div>
+      <input type="hidden" name="golongan_2">
+      <input type="hidden" name="profit_2">
+      <input type="hidden" name="qty_2">
+      <input type="hidden" name="golongan_3">
+      <input type="hidden" name="profit_3">
+      <input type="hidden" name="qty_3">
+      <input type="hidden" name="golongan_4">
+      <input type="hidden" name="profit_4">
+      <input type="hidden" name="qty_4">
       <div class="form-group <?php if(form_error('stok')) echo 'has-error'?>">
         <label for="stok">Stok</label>
-        <input autocomplete="off" type="text" id="stok" name="stok" class="form-control stok " placeholder="Stok" value="<?php echo $barang['stok'] ?>">
+        <input readonly autocomplete="off" type="text" id="stok" name="stok" class="form-control stok " placeholder="Stok" value="<?php echo $barang['stok'] ?>">
         <?php echo form_error('stok', '<small style="color:red">','</small>') ?>
       </div>
       <div class="form-group <?php if(form_error('diskon')) echo 'has-error'?>">

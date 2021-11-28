@@ -23,7 +23,11 @@ $(function () {
                 "data": "golongan_1",
                 render: $.fn.dataTable.render.number('.', '.', 0, '')
             },
-            { "data": "stok" },
+            {
+                "data": "profit_1",
+                render: $.fn.dataTable.render.number('.', '.', 0, '')
+            },
+            { "data": "stok_q" },
             { "data": "diskon" },
             {
                 "data": "id_barang",

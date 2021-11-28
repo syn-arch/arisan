@@ -196,15 +196,7 @@
               <input type="hidden" name="tgl_jatuh_tempo">
               <input type="hidden" name="nama_pengiriman">
               <input type="hidden" name="alamat_pengiriman">
-              <tr>
-                <th>Periode</th>
-                <td colspan="2">
-                  <select name="periode" id="periode" class="form-control">
-                    <option <?php echo $penjualan['periode'] == '15' ? 'selected' : '' ?> value="15">15</option>
-                    <option <?php echo $penjualan['periode'] == '17' ? 'selected' : '' ?> value="17">17</option>
-                  </select>
-                </td>
-              </tr>
+              <input type="hidden" name="periode" value="17">
               <tr>
                 <th>Nominal Kocokan</th>
                 <td colspan="2">

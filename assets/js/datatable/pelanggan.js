@@ -14,7 +14,6 @@ $(function () {
             { "data": "alamat" },
             { "data": "jk" },
             { "data": "telepon" },
-            { "data": "jenis" },
             {
                 "data": "id_pelanggan",
                 "render": function (data, type, row) {

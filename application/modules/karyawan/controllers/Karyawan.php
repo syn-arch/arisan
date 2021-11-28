@@ -56,9 +56,6 @@ class karyawan extends MX_Controller {
 		$valid->set_rules('email', 'email', 'required');
 		$valid->set_rules('id_outlet', 'outlet', 'required');
 		$valid->set_rules('jabatan', 'jabatan', 'required');
-		if (empty($_FILES['gambar']['name'])) {
-			$valid->set_rules('gambar', 'gambar', 'required');
-		}
 
 		if ($valid->run()) {
 			$this->karyawan_model->insert($this->input->post());

@@ -41,9 +41,12 @@ class karyawan_model extends CI_Model {
 			'telepon' => htmlspecialchars($post['telepon']),
 			'email' => htmlspecialchars($post['email']),
 			'jabatan' => htmlspecialchars($post['jabatan']),
-			'gambar' => _upload('gambar', 'karyawan/tambah', 'karyawan'),
 			'id_outlet' => htmlspecialchars($post['id_outlet'])
 		];
+
+		if ($_FILES['gambar']['name']) {
+			$data['gambar'] = _upload('gambar', 'karyawan/tambah', 'karyawan');
+		}
 
 		$this->db->insert('karyawan', $data);
 	}

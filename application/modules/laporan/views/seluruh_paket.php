@@ -32,13 +32,7 @@
                                 <label for="">Sampai Tanggal</label>
                                 <input type="date" name="sampai" id="sampai" class="form-control" value="<?php echo $this->input->get('sampai') ?>">
                             </div>
-                            <div class="form-group">
-                                <label for="">Periode</label>
-                                <select name="periode" id="periode" class="form-control">
-                                    <option value="15" <?php echo $this->input->get('periode') == '15' ? 'selected' : '' ?>>15</option>
-                                    <option value="17" <?php echo $this->input->get('periode') == '17' ? 'selected' : '' ?>>17</option>
-                                </select>
-                            </div>
+                           <input type="hidden" name="periode" value="17">
                             <div class="form-group">
                                 <label for="">Agen</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
