@@ -10,49 +10,12 @@
                 <div class="pull-right">
                     <?php if ($this->input->get('id_karyawan')): ?>
                         
-                        <a href="<?php echo base_url('laporan/cetaK_barang_perkelompok/' . 
-                        $this->input->get('id_karyawan') . '/' . 
-                        $this->input->get('id_pelanggan') . '/' . 
-                        $this->input->get('jenis_paket')
-                        ) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+                        <a href="<?php echo base_url('laporan/cetaK_barang_perkelompok/' . $this->input->get('faktur_penjualan')) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
                     <?php endif ?>
                 </div>
             </div>
             <div class="box-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <form action="">
-                            <div class="form-group">
-                                <label for="">Agen</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
-                                    <?php foreach ($karyawan as $row): ?>
-                                        <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Kelompok</label>
-                                <select name="id_pelanggan" id="id_pelanggan" class="form-control">
-                                    <?php foreach ($pelanggan as $row): ?>
-                                        <option value="<?php echo $row['id_pelanggan'] ?>" <?php echo $this->input->get('id_pelanggan') == $row['id_pelanggan'] ? 'selected' : '' ?>><?php echo $row['nama_pelanggan'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Jenis Paket</label>
-                                <select name="jenis_paket" id="jenis_paket" class="form-control">
-                                    <option value="REGULAR" <?php echo $this->input->get('jenis_paket') == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
-                                    <option value="TAHUNAN" <?php echo $this->input->get('jenis_paket') == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-danger btn-block">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <br><br>
-                <?php if ($this->input->get('id_pelanggan')): ?>
+                <?php if ($this->input->get('faktur_penjualan')): ?>
                     <div class="row">
                         <div class="col-md-6">
                             <table class="table">
@@ -84,7 +47,7 @@
                         </div>
                     </div>
                 <?php endif ?>
-                <?php if ($this->input->get('id_karyawan')): ?>
+                <?php if ($this->input->get('faktur_penjualan')): ?>
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped" cellspacing="0" width="100%" id="table-riwayat-penjualan">
@@ -114,9 +77,9 @@
                                         <td><?php echo number_format($row['total_harga_jual']) ?></td>
                                         <td>
                                             <form action="">
-                                                <select name="keterangan" id="keterangan" class="form-control keterangan" data-brg="<?php echo $row['id_barang'] ?>">
-                                                    <option value="DIAMBIL" <?php echo $row['keterangan'] == 'DIAMBIL' ? 'selected' : '' ?>>DIAMBIL</option>
-                                                    <option value="BELUM DIAMBIL" <?php echo $row['keterangan'] == 'BELUM DIAMBIL' ? 'selected' : '' ?>>BELUM DIAMBIL</option>
+                                                <select name="keterangan" id="keterangan" class="form-control keterangan" data-brg="<?php echo $row['id_barang'] ?>" data-status="<?php echo $this->input->get('status') ?>">
+                                                    <option value="DITERIMA" <?php echo $row['keterangan'] == 'DITERIMA' ? 'selected' : '' ?>>DITERIMA</option>
+                                                    <option value="BELUM DITERIMA" <?php echo $row['keterangan'] == 'BELUM DITERIMA' ? 'selected' : '' ?>>BELUM DITERIMA</option>
                                                 </select>
                                             </form>
                                         </td>
@@ -130,6 +93,7 @@
                                 $this->db->where('id_pelanggan', $this->input->get('id_pelanggan'));
                                 $this->db->where('id_karyawan', $this->input->get('id_karyawan'));
                                 $this->db->where('jenis_paket', $this->input->get('jenis_paket'));
+                                $this->db->where('penjualan.status', $this->input->get('status'));
                                 $this->db->join('barang', 'id_barang');
                                 $this->db->join('penjualan', 'faktur_penjualan');
                                 $total_harga_pokok = $this->db->get('detail_penjualan')->row()->total_harga_pokok;
@@ -138,6 +102,7 @@
                                 $this->db->where('id_pelanggan', $this->input->get('id_pelanggan'));
                                 $this->db->where('id_karyawan', $this->input->get('id_karyawan'));
                                 $this->db->where('jenis_paket', $this->input->get('jenis_paket'));
+                                $this->db->where('penjualan.status', $this->input->get('status'));
                                 $this->db->join('barang', 'id_barang');
                                 $this->db->join('penjualan', 'faktur_penjualan');
                                 $total_harga_jual = $this->db->get('detail_penjualan')->row()->total_harga_jual;
@@ -146,6 +111,7 @@
                                 $this->db->where('id_pelanggan', $this->input->get('id_pelanggan'));
                                 $this->db->where('id_karyawan', $this->input->get('id_karyawan'));
                                 $this->db->where('jenis_paket', $this->input->get('jenis_paket'));
+                                $this->db->where('penjualan.status', $this->input->get('status'));
                                 $this->db->join('barang', 'id_barang');
                                 $this->db->join('penjualan', 'faktur_penjualan');
                                 $total_harga_laba = $this->db->get('detail_penjualan')->row()->total_harga_laba;
@@ -154,6 +120,7 @@
                                 $this->db->where('id_pelanggan', $this->input->get('id_pelanggan'));
                                 $this->db->where('id_karyawan', $this->input->get('id_karyawan'));
                                 $this->db->where('jenis_paket', $this->input->get('jenis_paket'));
+                                $this->db->where('penjualan.status', $this->input->get('status'));
                                 $this->db->join('barang', 'id_barang');
                                 $this->db->join('penjualan', 'faktur_penjualan');
                                 $total_jual = $this->db->get('detail_penjualan')->row()->total_jual;

@@ -194,19 +194,15 @@ $('.keterangan').change(function(){
 
     keterangan = $(this).val()
     id_barang = $(this).data('brg')
-    id_pelanggan = $('select[name="id_pelanggan"]').val()
-    id_karyawan = $('select[name="id_karyawan"]').val()
-    jenis_paket = $('select[name="jenis_paket"]').val()
+    faktur_penjualan = $(this).data('faktur')
 
     $.ajax({
         url : base_url + 'penjualan/ubah_keterangan/',
         method : 'post',
         data : {
-            keterangan,
-            id_pelanggan,
-            id_karyawan,
-            jenis_paket,
             id_barang,
+            keterangan,
+            faktur_penjualan
         },
         success : function(){
             swal({

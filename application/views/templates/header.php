@@ -29,7 +29,7 @@ if (!$petugas) {
   <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="<?php echo base_url('vendor/lte/') ?>dist/css/skins/skin-red.min.css">
 </head>
-<body class="hold-transition skin-red sidebar-mini <?php if($judul == "Penjualan" || $judul == "Pembelian" || $judul == "Pengembalian" || $judul == "Ubah Penjualan" || $judul == "Ubah Pembelian") echo "sidebar-collapse" ?>">
+<body class="hold-transition skin-red sidebar-mini <?php if($judul == "Penjualan" || $judul == "Pembelian" || $judul == "Pengembalian" || $judul == "Ubah Penjualan" || $judul == "Ubah Pembelian" || $judul == "Laporan Seluruh Paket") echo "sidebar-collapse" ?>">
   <div class="wrapper">
 
     <!-- Main Header -->

@@ -20,7 +20,7 @@
           <div class="col-md-8">
             <div class="form-group <?php if(form_error('id_barang')) echo 'has-error'?>">
               <label for="id_barang">ID barang</label>
-              <input autocomplete="off" readonly="" type="text" id="id_barang" name="id_barang" class="form-control id_barang " placeholder="ID barang" value="<?php echo autoID('BRG', 'barang') ?>">
+              <input autocomplete="off" type="text" id="id_barang" name="id_barang" class="form-control id_barang " placeholder="ID barang">
               <?php echo form_error('id_barang', '<small style="color:red">','</small>') ?>
             </div>
             <div class="form-group <?php if(form_error('nama_barang')) echo 'has-error'?>">
@@ -36,7 +36,6 @@
             <div class="form-group <?php if(form_error('id_kategori')) echo 'has-error'?>">
              <label for="id_kategori">Kategori</label>
              <select name="id_kategori" id="id_kategori" class="form-control select2">
-               <option value="">-- Silahkan Pilih Kategori ---</option>
                <?php foreach ($kategori as $row): ?>
                  <option value="<?php echo $row['id_kategori'] ?>" <?php echo set_value('id_kategori') == $row['id_kategori'] ? 'selected' : '' ?>><?php echo $row['nama_kategori'] ?></option>
                <?php endforeach ?>
@@ -46,8 +45,7 @@
            <div class="form-group <?php if(form_error('id_supplier')) echo 'has-error'?>">
             <label for="id_supplier">Supplier</label>
             <select name="id_supplier" id="id_supplier" class="form-control select2">
-              <option value="">-- Silahkan Pilih Supplier ---</option>
-              <?php foreach ($supplier as $row): ?>
+               <?php foreach ($supplier as $row): ?>
                <option value="<?php echo $row['id_supplier'] ?>" <?php echo set_value('id_supplier') == $row['id_supplier'] ? 'selected' : '' ?>><?php echo $row['nama_supplier'] ?></option>
              <?php endforeach ?>
            </select>
@@ -76,7 +74,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="golongan_1">Harga Jual</label>
-              <input autocomplete="off" type="number" id="golongan_1" name="golongan_1" class="form-control golongan_1 <?php if(form_error('golongan_1')) echo 'is-invalid'?>" placeholder="Golongan 1" value="<?php echo set_value('golongan_1') ?>">
+              <input autocomplete="off" type="number" id="golongan_1" name="golongan_1" class="form-control golongan_1 <?php if(form_error('golongan_1')) echo 'is-invalid'?>" placeholder="Harga Jual" value="<?php echo set_value('golongan_1') ?>">
               <?php echo form_error('golongan_1', '<small style="color:red">','</small>') ?>
             </div>
           </div>  
@@ -97,14 +95,10 @@
         </div>
         <div class="form-group <?php if(form_error('stok')) echo 'has-error'?>">
           <label for="stok">Stok</label>
-          <input autocomplete="off" type="number" id="stok" name="stok" class="form-control stok " placeholder="Stok" value="<?php echo set_value('stok') ?>">
+          <input autocomplete="off" type="number" id="stok" name="stok" class="form-control stok " placeholder="Stok" value="0">
           <?php echo form_error('stok', '<small style="color:red">','</small>') ?>
         </div>
-        <div class="form-group <?php if(form_error('diskon')) echo 'has-error'?>">
-          <label for="diskon">Diskon</label>
-          <input autocomplete="off" type="number" id="diskon" name="diskon" class="form-control diskon " placeholder="Diskon" value="0">
-          <?php echo form_error('diskon', '<small style="color:red">','</small>') ?>
-        </div>
+        <input type="hidden" name="diskon">
         <div class="form-group <?php if(form_error('gambar')) echo 'has-error'?>">
           <label for="gambar">Gambar</label>
           <input autocomplete="off" type="file" id="gambar" name="gambar" class="form-control gambar " placeholder="Gambar" value="<?php echo set_value('gambar') ?>">

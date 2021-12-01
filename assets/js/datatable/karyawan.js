@@ -16,7 +16,6 @@ $(function(){
 		{"data": "jk"},
 		{"data": "telepon"},
 		{"data": "email"},
-		{"data": "jabatan"},
 		{
 			"data": "id_karyawan",
 			"render" : function(data, type, row) {

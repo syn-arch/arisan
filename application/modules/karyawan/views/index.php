@@ -27,7 +27,6 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Telepon</th>
                                 <th>Email</th>
-                                <th>Jabatan</th>
                                 <th><i class="fa fa-cogs"></i></th>
                             </tr>
                         </thead>

@@ -77,8 +77,10 @@
         <div class="form-group">
           <div class="input-group input-group">
             <select required="" name="jenis_paket" id="jenis_paket" class="form-control select2">
-              <option value="REGULAR">REGULAR</option>
-              <option value="TAHUNAN">TAHUNAN</option>
+              <option value="JUARA ARISAN">JUARA ARISAN</option>
+              <option value="JUARA PAKET REGULER">JUARA PAKET REGULER</option>
+              <option value="JUARA PAKET NON REGULER">JUARA PAKET NON REGULER</option>
+              <option value="JUARA PAKET SATUAN">JUARA PAKET SATUAN</option>
             </select>
             <span class="input-group-btn">
               <button type="button" class="btn btn-info btn-flat"><i class="fa fa-users"></i></button>
@@ -133,7 +135,17 @@
               </tr>
               <input type="hidden" name="metode_pembayaran">
               <input type="hidden" name="tgl_jatuh_tempo">
-              <input type="hidden" name="periode" value="17">
+              <tr>
+                <th>Periode</th>
+                <td colspan="2">
+                  <select name="periode" id="periode" class="form-control">
+                    <option value="17">17</option>
+                    <option value="40">40</option>
+                    <option value="44">44</option>
+                    <option value="48">48</option>
+                  </select>
+                </td>
+              </tr>
               <tr>
                 <th>Nominal Kocokan</th>
                 <td colspan="2">

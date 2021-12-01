@@ -85,8 +85,10 @@
         <div class="form-group">
           <div class="input-group input-group">
             <select required="" name="jenis_paket" id="jenis_paket" class="form-control select2">
-              <option value="REGULAR" <?php echo $penjualan['jenis_paket'] == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
-              <option value="TAHUNAN" <?php echo $penjualan['jenis_paket'] == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
+              <option value="JUARA ARISAN" <?php echo $penjualan['jenis_paket'] == 'JUARA ARISAN' ? 'selected' : '' ?>>JUARA ARISAN</option>
+              <option value="JUARA PAKET REGULER" <?php echo $penjualan['jenis_paket'] == 'JUARA PAKET REGULER' ? 'selected' : '' ?>>JUARA PAKET REGULER</option>
+              <option value="JUARA PAKET NON REGULER" <?php echo $penjualan['jenis_paket'] == 'JUARA PAKET NON REGULER' ? 'selected' : '' ?>>JUARA PAKET NON REGULER</option>
+              <option value="JUARA PAKET SATUAN" <?php echo $penjualan['jenis_paket'] == 'JUARA PAKET SATUAN' ? 'selected' : '' ?>>JUARA PAKET SATUAN</option>
             </select>
             <span class="input-group-btn">
               <button type="button" class="btn btn-info btn-flat"><i class="fa fa-users"></i></button>
@@ -197,6 +199,18 @@
               <input type="hidden" name="nama_pengiriman">
               <input type="hidden" name="alamat_pengiriman">
               <input type="hidden" name="periode" value="17">
+              <input type="hidden" name="periode_lama" value="<?php echo $penjualan['periode'] ?>">
+              <tr>
+                <th>Periode</th>
+                <td colspan="2">
+                  <select name="periode" id="periode" class="form-control">
+                    <option value="17" <?php echo $penjualan['periode'] == '17' ? 'selected' : '' ?>>17</option>
+                    <option value="40" <?php echo $penjualan['periode'] == '40' ? 'selected' : '' ?>>40</option>
+                    <option value="44" <?php echo $penjualan['periode'] == '44' ? 'selected' : '' ?>>44</option>
+                    <option value="48" <?php echo $penjualan['periode'] == '48' ? 'selected' : '' ?>>48</option>
+                  </select>
+                </td>
+              </tr>
               <tr>
                 <th>Nominal Kocokan</th>
                 <td colspan="2">

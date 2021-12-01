@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group <?php if(form_error('nominal')) echo 'has-error'?>">
                             <label for="nominal">Nominal</label>
-                            <input type="text" id="nominal" name="nominal" class="form-control nominal " placeholder="Nominal" value="<?php echo $pembayaran['nominal'] ?>" readonly>
+                            <input type="text" id="nominal" name="nominal" class="form-control nominal " placeholder="Nominal" value="<?php echo $pembayaran['nominal'] ?>">
                             <?php echo form_error('nominal', '<small style="color:red">','</small>') ?>
                         </div>
                         <div class="form-group">

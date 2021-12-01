@@ -13,7 +13,8 @@
                         <a href="<?php echo base_url('laporan/cetak_per_kelompok/' . 
                         $this->input->get('id_karyawan') . '/' . 
                         $this->input->get('id_pelanggan') . '/' . 
-                        $this->input->get('jenis_paket')
+                        $this->input->get('jenis_paket') . '/' .
+                        $this->input->get('status')
                         ) ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Cetak</a>
                     <?php endif ?>
                 </div>
@@ -24,7 +25,7 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="">Agen</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
+                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k select2">
                                     <?php foreach ($karyawan as $row): ?>
                                         <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
                                     <?php endforeach ?>
@@ -32,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Kelompok</label>
-                                <select name="id_pelanggan" id="id_pelanggan" class="form-control">
+                                <select name="id_pelanggan" id="id_pelanggan" class="form-control select2">
                                     <?php foreach ($pelanggan as $row): ?>
                                         <option value="<?php echo $row['id_pelanggan'] ?>" <?php echo $this->input->get('id_pelanggan') == $row['id_pelanggan'] ? 'selected' : '' ?>><?php echo $row['nama_pelanggan'] ?></option>
                                     <?php endforeach ?>
@@ -41,9 +42,18 @@
                             <div class="form-group">
                                 <label for="">Jenis Paket</label>
                                 <select name="jenis_paket" id="jenis_paket" class="form-control">
-                                    <option value="REGULAR" <?php echo $this->input->get('jenis_paket') == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
-                                    <option value="TAHUNAN" <?php echo $this->input->get('jenis_paket') == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
-                                </select>
+                                   <option value="JUARA ARISAN" <?php echo $this->input->get('jenis_paket') == 'JUARA ARISAN' ? 'selected' : '' ?>>JUARA ARISAN</option>
+                                   <option value="JUARA PAKET REGULER" <?php echo $this->input->get('jenis_paket') == 'JUARA PAKET REGULER' ? 'selected' : '' ?>>JUARA PAKET REGULER</option>
+                                   <option value="JUARA PAKET NON REGULER" <?php echo $this->input->get('jenis_paket') == 'JUARA PAKET NON REGULER' ? 'selected' : '' ?>>JUARA PAKET NON REGULER</option>
+                                   <option value="JUARA PAKET SATUAN" <?php echo $this->input->get('jenis_paket') == 'JUARA PAKET SATUAN' ? 'selected' : '' ?>>JUARA PAKET SATUAN</option>
+                               </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Status Paket</label>
+                                <select name="status" id="status" class="form-control">
+                                   <option value="Lunas" <?php echo $this->input->get('status') == 'Lunas' ? 'selected' : '' ?>>Lunas</option>
+                                   <option value="Belum Lunas" <?php echo $this->input->get('status') == 'Belum Lunas' ? 'selected' : '' ?>>Belum Lunas</option>
+                               </select>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-danger btn-block">Submit</button>
@@ -124,6 +134,7 @@
                                 $this->db->where('id_pelanggan', $this->input->get('id_pelanggan'));
                                 $this->db->where('id_karyawan', $this->input->get('id_karyawan'));
                                 $this->db->where('status_bayar', 'SUDAH BAYAR');
+                                $this->db->where('status', $this->input->get('status'));
                                 $this->db->join('penjualan', 'faktur_penjualan');
                                 $jumlah_bayar =  $this->db->get('pembayaran')->row()->jumlah;
 
@@ -141,7 +152,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>Sisa Bayar</td>
-                                    <td><?php echo number_format($laporan['0']['total_bayar'] - $jumlah_bayar) ?></td>
+                                    <td><?php echo number_format($laporan['0']['total_bayar'] ?? 0 - $jumlah_bayar) ?></td>
                                     <td></td>
                                 </tr>
 

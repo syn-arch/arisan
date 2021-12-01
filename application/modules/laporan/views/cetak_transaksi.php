@@ -43,8 +43,10 @@
                     <th>Tanggal</th>
                     <th>Agen</th>
                     <th>Kelompok</th>
+                    <th>Jenis</th>
                     <th>Total Bayar</th>
-                    <th>Cash</th>
+                    <th>Angsuran</th>
+                    <th>Jumlah Bayar</th>
                     <th>Sisa Bayar</th>
                     <th>Status</th>
                   </tr>
@@ -53,30 +55,38 @@
                   <?php if ($laporan[0]['faktur_penjualan']): ?>
 
                     <?php foreach ($laporan as $index => $row): ?>
-                      <tr>
-                        <td><?php echo $index += 1 ?></td>
-                        <td><?php echo $row['tgl'] ?></td>
-                        <td><?php echo $row['nama_karyawan'] ?></td>
-                        <td><?php echo $row['nama_pelanggan'] ?></td>
-                        <td><?php echo number_format($row['total_bayar']) ?></td>
-                        <td><?php echo number_format($row['cash']) ?></td>
-                        <td><?php echo number_format($row['sisa_bayar']) ?></td>
-                        <?php if ($row['status'] == 'Lunas'): ?>
-                          <td> <button class="btn btn-success"><?php echo $row['status'] ?></button></td>
-                        <?php else: ?>
-                          <td> <button class="btn btn-warning"><?php echo $row['status'] ?></button></td>
-                        <?php endif ?>
-                      </tr>
-                    <?php endforeach ?>
-                  <?php endif ?>
+                     <tr>
+                      <td><?php echo $index += 1 ?></td>
+                      <td><?php echo $row['tgl'] ?></td>
+                      <td><?php echo $row['nama_karyawan'] ?></td>
+                      <td><?php echo $row['nama_pelanggan'] ?></td>
+                      <td><?php echo $row['jenis_paket'] ?></td>
+                      <td><?php echo number_format($row['total_bayar']) ?></td>
+                      <td><?php echo number_format($row['angsuran']) ?></td>
+                      <td><?php 
+                      $this->db->select('sum(nominal) as total');
+                      $this->db->where('faktur_penjualan', $row['faktur_penjualan']);
+                      $this->db->where('status_bayar', 'SUDAH BAYAR');
+                      $cash = $this->db->get('pembayaran')->row()->total ?? 0;
+                      echo number_format($cash);
+                    ?></td>
+                    <td><?php echo number_format($row['total_bayar'] - $cash) ?></td>
+                    <?php if ($row['status'] == 'Lunas'): ?>
+                      <td> <button class="btn btn-success"><?php echo $row['status'] ?></button></td>
+                    <?php else: ?>
+                      <td> <button class="btn btn-warning"><?php echo $row['status'] ?></button></td>
+                    <?php endif ?>
+                  </tr>
+                <?php endforeach ?>
+              <?php endif ?>
 
-                </tbody>
-              </table>
-            </div>
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
+</div>
+</div>
 </body>
 </html>

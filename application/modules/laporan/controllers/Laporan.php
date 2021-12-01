@@ -535,6 +535,11 @@ class laporan extends MX_Controller {
 
 		$data['laporan'] = $this->laporan_model->get_transaksi($dari, $sampai);
 
+		if ($faktur = $this->input->get('faktur_penjualan')) {
+			$data['detail_transaksi'] = $this->laporan_model->get_barang_perkelompok($faktur);
+			$data['transaksi'] = $this->laporan_model->get_penjualan($faktur);
+		}
+
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('laporan/transaksi', $data, FALSE);
 		$this->load->view('templates/footer', $data, FALSE);
@@ -581,7 +586,7 @@ class laporan extends MX_Controller {
 	{
 		$data['judul'] = "Laporan Seluruh Paket";
 
-		$data['laporan'] = $this->laporan_model->get_seluruh_paket($dari, $sampai, $periode, $id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['laporan'] = $this->laporan_model->get_seluruh_paket($dari, $sampai, $periode, $id_karyawan, $id_pelanggan, urldecode($jenis_paket));
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 
@@ -602,8 +607,10 @@ class laporan extends MX_Controller {
 		$id_pelanggan = $this->input->get('id_pelanggan');
 		$id_karyawan = $this->input->get('id_karyawan');
 		$jenis_paket = $this->input->get('jenis_paket');
+		$status = $this->input->get('status');
 
-		$data['laporan'] = $this->laporan_model->get_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['laporan'] = $this->laporan_model->get_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket, $status);
+
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 
@@ -619,11 +626,11 @@ class laporan extends MX_Controller {
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 
-	public function cetak_per_kelompok($id_karyawan, $id_pelanggan, $jenis_paket)
+	public function cetak_per_kelompok($id_karyawan, $id_pelanggan, $jenis_paket, $status)
 	{
 		$data['judul'] = "Laporan Perkelompok";
 
-		$data['laporan'] = $this->laporan_model->get_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['laporan'] = $this->laporan_model->get_perkelompok($id_karyawan, $id_pelanggan, urldecode($jenis_paket), urldecode($status));
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 
@@ -637,35 +644,78 @@ class laporan extends MX_Controller {
 		$this->load->view('laporan/cetak_per_kelompok', $data, FALSE);
 	}
 
+	public function barang_diterima()
+	{
+		$data['judul'] = "Laporan Barang Diterima";
+
+		$dari = $this->input->get('dari');
+		$sampai = $this->input->get('sampai');
+
+		if ($this->input->get('dari')) {
+			$data['laporan'] = $this->laporan_model->get_barang_diterima($dari, $sampai);
+		}
+
+		$this->load->view('templates/header', $data, FALSE);
+		$this->load->view('laporan/barang_diterima', $data, FALSE);
+		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+	public function cetak_barang_diterima($dari, $sampai)
+	{
+		$data['judul'] = "Laporan Barang Diterima";
+
+		$data['laporan'] = $this->laporan_model->get_barang_diterima($dari, $sampai);
+
+		$this->load->view('laporan/cetak_barang_diterima', $data, FALSE);
+	}
+
+
+	public function pembayaran()
+	{
+		$data['judul'] = "Laporan Pembayaran";
+
+		$dari = $this->input->get('dari');
+		$sampai = $this->input->get('sampai');
+
+		if ($dari) {
+			$data['laporan'] = $this->laporan_model->get_pembayaran($dari, $sampai);
+		}
+
+		$this->load->view('templates/header', $data, FALSE);
+		$this->load->view('laporan/pembayaran', $data, FALSE);
+		$this->load->view('templates/footer', $data, FALSE);
+	}
+
+	public function cetak_pembayaran($dari, $sampai)
+	{
+		$data['judul'] = "Laporan Pembayaran";
+
+		$data['laporan'] = $this->laporan_model->get_pembayaran($dari, $sampai);
+
+		$this->load->view('laporan/cetak_pembayaran', $data, FALSE);
+	}
+
 	public function barang_perkelompok()
 	{
 		$data['judul'] = "Laporan Barang Perkelompok";
 
-		$id_pelanggan = $this->input->get('id_pelanggan');
-		$id_karyawan = $this->input->get('id_karyawan');
-		$jenis_paket = $this->input->get('jenis_paket');
+		$faktur_penjualan = $this->input->get('faktur_penjualan');
 
-		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket);
-		$data['karyawan'] = $this->karyawan_model->get_karyawan();
-		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
-
-		if ($id_pelanggan) {
-			$data['kelompok'] = $this->pelanggan_model->get_pelanggan($id_pelanggan);
-		}
-		if ($id_karyawan) {
-			$data['agen'] = $this->karyawan_model->get_karyawan($id_karyawan);
-		}
+		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($faktur_penjualan);
+		$data['transaksi'] = $this->laporan_model->get_transaksi();
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('laporan/barang_perkelompok', $data, FALSE);
 		$this->load->view('templates/footer', $data, FALSE);
 	}
 
-	public function cetak_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
+	public function cetak_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '', $status = '')
 	{
 		$data['judul'] = "Laporan Barang Perkelompok";
 
-		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($id_karyawan, $id_pelanggan, $jenis_paket, true);
+
+		$data['laporan'] = $this->laporan_model->get_barang_perkelompok($id_karyawan, $id_pelanggan, urldecode($jenis_paket), urldecode($status));
+
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 
@@ -708,7 +758,7 @@ class laporan extends MX_Controller {
 	public function cetak_paket_tahunan($id_karyawan, $id_pelanggan, $jenis_paket)
 	{
 		$data['judul'] = "Laporan Paket Tahunan";
-		$data['laporan'] = $this->laporan_model->get_paket_tahunan($id_karyawan, $id_pelanggan, $jenis_paket);
+		$data['laporan'] = $this->laporan_model->get_paket_tahunan($id_karyawan, $id_pelanggan, urldecode($jenis_paket));
 		$data['karyawan'] = $this->karyawan_model->get_karyawan();
 		$data['pelanggan'] = $this->pelanggan_model->get_pelanggan();
 

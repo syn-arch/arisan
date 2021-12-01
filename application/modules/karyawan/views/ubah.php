@@ -52,11 +52,7 @@
                                <input type="text" id="E-mail" name="email" class="form-control E-mail " placeholder="E-mail" value="<?php echo $karyawan['email'] ?>">
                                <?php echo form_error('E-mail', '<small style="color:red">','</small>') ?>
                            </div>
-                           <div class="form-group <?php if(form_error('jabatan')) echo 'has-error'?>">
-                             <label for="jabatan">Jabatan</label>
-                             <input type="text" id="jabatan" name="jabatan" class="form-control jabatan " placeholder="Jabatan" value="<?php echo $karyawan['jabatan'] ?>">
-                             <?php echo form_error('jabatan', '<small style="color:red">','</small>') ?>
-                           </div>
+                           <input type="hidden" name="jabatan">
                            <div class="form-group <?php if(form_error('gambar')) echo 'has-error'?>">
                                <label for="gambar">Gambar</label>
                                <input type="file" id="gambar" name="gambar" class="form-control gambar " placeholder="Gambar" value="<?php echo set_value('gambar') ?>">
@@ -68,7 +64,6 @@
                            <div class="form-group <?php if(form_error('id_outlet')) echo 'has-error'?>">
                                <label for="id_outlet">Outlet</label>
                                <select name="id_outlet" id="id_outlet" class="form-control">
-                                   <option value="">-- Silahkan Pilih Outlet ---</option>
                                    <?php foreach ($outlet as $row): ?>
                                        <option value="<?php echo $row['id_outlet'] ?>" <?php echo $karyawan['id_outlet'] == $row['id_outlet'] ? 'selected' : '' ?>><?php echo $row['nama_outlet'] ?></option>
                                    <?php endforeach ?>

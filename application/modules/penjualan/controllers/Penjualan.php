@@ -21,23 +21,12 @@ class penjualan extends MX_Controller {
 
 	function ubah_keterangan(){
 
-		$id_karyawan = $this->input->post('id_karyawan');
-		$id_pelanggan = $this->input->post('id_pelanggan');
+		$faktur_penjualan = $this->input->post('faktur_penjualan');
 		$keterangan = $this->input->post('keterangan');
-		$jenis_paket = $this->input->post('jenis_paket');
 		$id_barang = $this->input->post('id_barang');
 
-		$faktur_penjualan =  $this->db->get_where('penjualan', [
-			'id_karyawan' => $id_karyawan,
-			'id_pelanggan' => $id_pelanggan,
-			'jenis_paket' => $jenis_paket
-		])->row()->faktur_penjualan;
-
-
-		var_dump($this->input->post());
-
 		$this->db->set('keterangan', $keterangan);
-		if ($keterangan == 'BELUM DIAMBIL') {
+		if ($keterangan == 'BELUM DITERIMA') {
 			$this->db->set('tgl_diambil', date('0000-00-00 00:00:00'));
 		}else{
 			$this->db->set('tgl_diambil', date('Y-m-d H:i:s'));
@@ -157,8 +146,6 @@ class penjualan extends MX_Controller {
 
 		$petugas = $this->session->userdata('id_outlet');
 
-		!empty($petugas) ? $id_outlet = $petugas : $id_outlet = $this->db->get('outlet')->row()->id_outlet;
-		$this->db->where('id_outlet', $id_outlet);
 		$data['karyawan'] = $this->db->get('karyawan')->result_array();
 
 		$this->load->view('templates/header', $data, FALSE);
@@ -177,6 +164,16 @@ class penjualan extends MX_Controller {
 
 	public function proses($hold = false)
 	{
+		$this->db->where('id_karyawan', $this->input->post('id_karyawan'));
+		$this->db->where('id_pelanggan', $this->input->post('id_pelanggan'));
+		$this->db->where('status', 'Belum Lunas');
+		$transaksi_belum_lunas = $this->db->get('penjualan')->row_array();
+
+		if ($transaksi_belum_lunas) {
+			$this->session->set_flashdata('error', 'Ada Transaksi Yang Belum Lunas');
+			redirect('penjualan','refresh');
+		}
+
 		$array = array(
 			'id_karyawan' => $_POST['id_karyawan']
 		);
@@ -265,7 +262,7 @@ class penjualan extends MX_Controller {
 		if ($pengaturan['print_otomatis'] == 1) {
 			$this->cetak_thermal($faktur, false);
 		}
-		redirect('penjualan/invoice_cetak/' . $this->input->post('faktur_penjualan'),'refresh');
+		redirect('penjualan/invoice/' . $this->input->post('faktur_penjualan'),'refresh');
 	}
 
 	public function invoice($id)
@@ -473,6 +470,7 @@ class penjualan extends MX_Controller {
 		$data['judul'] = "Data Pembayaran";
 		$data['pembayaran'] = $this->penjualan_model->get_pembayaran($id);
 		$data['faktur_penjualan'] = $id;
+		$data['penjualan'] = $this->penjualan_model->get_penjualan($id);
 
 		$this->load->view('templates/header', $data, FALSE);
 		$this->load->view('penjualan/pembayaran', $data, FALSE);

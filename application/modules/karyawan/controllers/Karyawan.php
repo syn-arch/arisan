@@ -55,7 +55,6 @@ class karyawan extends MX_Controller {
 		$valid->set_rules('telepon', 'telepon', 'required');
 		$valid->set_rules('email', 'email', 'required');
 		$valid->set_rules('id_outlet', 'outlet', 'required');
-		$valid->set_rules('jabatan', 'jabatan', 'required');
 
 		if ($valid->run()) {
 			$this->karyawan_model->insert($this->input->post());
@@ -80,7 +79,6 @@ class karyawan extends MX_Controller {
 		$valid->set_rules('alamat', 'alamat', 'required');
 		$valid->set_rules('telepon', 'telepon', 'required');
 		$valid->set_rules('email', 'email', 'required');
-		$valid->set_rules('jabatan', 'jabatan', 'required');
 		$valid->set_rules('id_outlet', 'outlet', 'required');
 
 		if ($valid->run()) {

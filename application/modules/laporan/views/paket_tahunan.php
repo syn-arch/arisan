@@ -23,7 +23,7 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="">Agen</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k">
+                                <select name="id_karyawan" id="id_karyawan" class="form-control id_agen_k select2">
                                     <option value="semua" <?php echo $this->input->get('id_karyawan') == 'semua' ? 'selected' : '' ?>>SEMUA</option>
                                     <?php foreach ($karyawan as $row): ?>
                                         <option value="<?php echo $row['id_karyawan'] ?>" <?php echo $this->input->get('id_karyawan') == $row['id_karyawan'] ? 'selected' : '' ?>><?php echo $row['nama_karyawan'] ?></option>
@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Kelompok</label>
-                                <select name="id_pelanggan" id="id_pelanggan" class="form-control">
+                                <select name="id_pelanggan" id="id_pelanggan" class="form-control select2">
                                     <option value="semua" <?php echo $this->input->get('id_pelanggan') == 'semua' ? 'selected' : '' ?>>SEMUA</option>
                                     <?php foreach ($pelanggan as $row): ?>
                                         <option value="<?php echo $row['id_pelanggan'] ?>" <?php echo $this->input->get('id_pelanggan') == $row['id_pelanggan'] ? 'selected' : '' ?>><?php echo $row['nama_pelanggan'] ?></option>
@@ -42,9 +42,11 @@
                             <div class="form-group">
                                 <label for="">Jenis Paket</label>
                                 <select name="jenis_paket" id="jenis_paket" class="form-control">
-                                    <option value="REGULAR" <?php echo $this->input->get('jenis_paket') == 'REGULAR' ? 'selected' : '' ?>>REGULAR</option>
-                                    <option value="TAHUNAN" <?php echo $this->input->get('jenis_paket') == 'TAHUNAN' ? 'selected' : '' ?>>TAHUNAN</option>
-                                </select>
+                                   <option value="JUARA ARISAN" <?php echo $this->input->get('jenis_paket') == 'JUARA ARISAN' ? 'selected' : '' ?>>JUARA ARISAN</option>
+                                   <option value="JUARA PAKET REGULER" <?php echo $this->input->get('jenis_paket') == 'JUARA PAKET REGULER' ? 'selected' : '' ?>>JUARA PAKET REGULER</option>
+                                   <option value="JUARA PAKET NON REGULER" <?php echo $this->input->get('jenis_paket') == 'JUARA PAKET NON REGULER' ? 'selected' : '' ?>>JUARA PAKET NON REGULER</option>
+                                   <option value="JUARA PAKET SATUAN" <?php echo $this->input->get('jenis_paket') == 'JUARA PAKET SATUAN' ? 'selected' : '' ?>>JUARA PAKET SATUAN</option>
+                               </select>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-danger btn-block">Submit</button>

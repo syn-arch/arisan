@@ -100,11 +100,7 @@
         <input readonly autocomplete="off" type="text" id="stok" name="stok" class="form-control stok " placeholder="Stok" value="<?php echo $barang['stok'] ?>">
         <?php echo form_error('stok', '<small style="color:red">','</small>') ?>
       </div>
-      <div class="form-group <?php if(form_error('diskon')) echo 'has-error'?>">
-        <label for="diskon">Diskon</label>
-        <input autocomplete="off" type="text" id="diskon" name="diskon" class="form-control diskon " placeholder="Diskon" value="<?php echo $barang['diskon'] ?>">
-        <?php echo form_error('diskon', '<small style="color:red">','</small>') ?>
-      </div>
+     <input type="hidden" name="diskon">
       <div class="form-group <?php if(form_error('barcode')) echo 'has-error'?>">
         <label for="barcode">Barcode</label>
         <input autocomplete="off" type="text" id="barcode" name="barcode" class="form-control barcode " placeholder="Barcode" value="<?php echo $barang['barcode'] ?>">

@@ -17,26 +17,26 @@ class barang extends MX_Controller {
 		$this->load->model('barang/barang_model');
 		$this->load->model('kategori/kategori_model');
 		$this->load->model('supplier/supplier_model');
-    }
-    
-    public function get_all_qty($id_barang)
-    {
-        $this->db->select("qty_1, qty_2, qty_3, qty_4");
+	}
+
+	public function get_all_qty($id_barang)
+	{
+		$this->db->select("qty_1, qty_2, qty_3, qty_4");
 		$this->db->where('id_barang', $id_barang);
 		$this->db->or_where('barcode', $id_barang);
-        $qty = $this->db->get('barang')->row();
+		$qty = $this->db->get('barang')->row();
 
-        echo json_encode($qty);
-    }
+		echo json_encode($qty);
+	}
 
-    public function get_brg($id_barang)
-    {
-        $this->db->where('id_barang', $id_barang);
-        $this->db->or_where('barcode', $id_barang);
-        $brg = $this->db->get('barang')->row_array();
+	public function get_brg($id_barang)
+	{
+		$this->db->where('id_barang', $id_barang);
+		$this->db->or_where('barcode', $id_barang);
+		$brg = $this->db->get('barang')->row_array();
 
-        echo json_encode($brg);
-    }
+		echo json_encode($brg);
+	}
 
 	public function get_barang_json()
 	{
@@ -128,12 +128,15 @@ class barang extends MX_Controller {
 	public function tambah()
 	{
 		$valid = $this->form_validation;
+		$valid->set_rules('id_barang', 'id_barang', 'required|is_unique[barang.id_barang]', [
+			'required' => 'Tidak boleh kosong',
+			'is_unique' => 'ID Barang telah ada'
+		]);
 		$valid->set_rules('nama_barang', 'nama barang', 'required');
 		$valid->set_rules('satuan', 'satuan', 'required');
 		$valid->set_rules('id_kategori', 'kategori', 'required');
 		$valid->set_rules('id_supplier', 'supplier', 'required');
 		$valid->set_rules('harga_pokok', 'harga pokok', 'required');
-		$valid->set_rules('id_barang', 'id barang', 'required');
 		$valid->set_rules('nama_pendek', 'nama pendek', 'required');
 
 		if ($valid->run()) {
@@ -162,6 +165,7 @@ class barang extends MX_Controller {
 		$valid->set_rules('id_barang', 'id_barang', 'required');
 		$valid->set_rules('nama_pendek', 'nama pendek', 'required');
 
+
 		if ($valid->run()) {
 			$this->barang_model->update($id, $this->input->post());
 			$this->session->set_flashdata('success', 'diubah');
@@ -180,7 +184,7 @@ class barang extends MX_Controller {
 
 	public function export()
 	{
-        $barang = $this->barang_model->get_barang();
+		$barang = $this->barang_model->get_barang();
 
 		$spreadsheet = new Spreadsheet();
 		$spreadsheet->setActiveSheetIndex(0)
@@ -211,12 +215,12 @@ class barang extends MX_Controller {
 		$i=2; 
 		foreach($barang as $row) {
 
-            $multi_outlet = $this->db->get('pengaturan')->row()->multi_outlet;
-            if($multi_outlet == true) {
-                $stok = $row['stok'];
-            }else{
-                $stok = $row['stok_outlet'];
-            }
+			$multi_outlet = $this->db->get('pengaturan')->row()->multi_outlet;
+			if($multi_outlet == true) {
+				$stok = $row['stok'];
+			}else{
+				$stok = $row['stok_outlet'];
+			}
 
 			$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A' . $i, $row['id_barang'])
@@ -281,206 +285,206 @@ class barang extends MX_Controller {
 		header('Content-Disposition: attachment;filename="Data barang.xlsx"');
 		header('Cache-Control: max-age=0');
 		$writer->save('php://output');
-    }
+	}
 
-    public function autoNumber()
+	public function autoNumber()
 	{
 		$barang = $this->barang_model->get_barang();
 		$spreadsheet = new Spreadsheet();
-        $spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Kode barang');                      
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Kode barang');                      
 
-        for ($i=1; $i < 32194; $i++) { 
-            $spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $i, 'BRG' . sprintf("%05s", $i));
-        }
+		for ($i=1; $i < 32194; $i++) { 
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('A' . $i, 'BRG' . sprintf("%05s", $i));
+		}
 
 		$writer = new Xlsx($spreadsheet);
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment;filename="Kode Barang.xlsx"');
 		header('Cache-Control: max-age=0');
 		$writer->save('php://output');
-    }
-    
-    private function clean_rp($str)
-    {
-        $str = str_replace('Rp', '', $str);
+	}
 
-        return $str;
-    }
+	private function clean_rp($str)
+	{
+		$str = str_replace('Rp', '', $str);
+
+		return $str;
+	}
 
 	public function import()
 	{
-        ini_set('memory_limit', '-1');
+		ini_set('memory_limit', '-1');
         ini_set('max_execution_time', 300); //300 seconds = 5 minutes
         set_time_limit(300);
 
-		$file = explode('.', $_FILES['excel']['name']);
-		$extension = end($file);
+        $file = explode('.', $_FILES['excel']['name']);
+        $extension = end($file);
 
-		if($extension == 'csv') {
-			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-		} else {
-			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-		}
+        if($extension == 'csv') {
+        	$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        } else {
+        	$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        }
 
-		$spreadsheet = $reader->load($_FILES['excel']['tmp_name']);
-		$sheetData = $spreadsheet->getActiveSheet()->toArray();
-		for($i = 1;$i < count($sheetData); $i++)
-		{
-			if ($sheetData[$i]['0'] != '') {
+        $spreadsheet = $reader->load($_FILES['excel']['tmp_name']);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        for($i = 1;$i < count($sheetData); $i++)
+        {
+        	if ($sheetData[$i]['0'] != '') {
 
-                $gol_1 = (int) $this->clean_rp($sheetData[$i]['10']);
-                $gol_2 = (int) $this->clean_rp($sheetData[$i]['11']);
-                $gol_3 = (int) $this->clean_rp($sheetData[$i]['12']);
-                $gol_4 = (int) $this->clean_rp($sheetData[$i]['13']);
+        		$gol_1 = (int) $this->clean_rp($sheetData[$i]['10']);
+        		$gol_2 = (int) $this->clean_rp($sheetData[$i]['11']);
+        		$gol_3 = (int) $this->clean_rp($sheetData[$i]['12']);
+        		$gol_4 = (int) $this->clean_rp($sheetData[$i]['13']);
 
-                $harga_pokok = (int) $this->clean_rp($sheetData[$i]['7']) != '' ? $this->clean_rp($sheetData[$i]['7']) :  $this->clean_rp($sheetData[$i]['10']);
+        		$harga_pokok = (int) $this->clean_rp($sheetData[$i]['7']) != '' ? $this->clean_rp($sheetData[$i]['7']) :  $this->clean_rp($sheetData[$i]['10']);
 
-				$profit_1 = $gol_1 - $harga_pokok;
-                $profit_2 = $gol_2 != 0 ? $gol_2 - $harga_pokok : 0;
-				$profit_3 = $gol_3 != 0 ? $gol_3 - $harga_pokok : 0;
-                $profit_4 = $gol_4 != 0 ? $gol_4 - $harga_pokok : 0;
-                
-                $qty_1 = $sheetData[$i]['14'];
-                $qty_2 = $sheetData[$i]['15'] != '' ? $sheetData[$i]['15'] : 0;
-                $qty_3 = $sheetData[$i]['16'] != '' ? $sheetData[$i]['16'] : 0;
-                $qty_4 = $sheetData[$i]['17'] != '' ? $sheetData[$i]['17'] : 0;
+        		$profit_1 = $gol_1 - $harga_pokok;
+        		$profit_2 = $gol_2 != 0 ? $gol_2 - $harga_pokok : 0;
+        		$profit_3 = $gol_3 != 0 ? $gol_3 - $harga_pokok : 0;
+        		$profit_4 = $gol_4 != 0 ? $gol_4 - $harga_pokok : 0;
 
-				$data = [
-					'id_barang' => $sheetData[$i]['0'],
-					'id_kategori' => $sheetData[$i]['1'],
-					'id_supplier' => $sheetData[$i]['2'],
-					'satuan' => $sheetData[$i]['3'],
-					'barcode' => $sheetData[$i]['4'],
-					'nama_barang' => $sheetData[$i]['5'],
-					'nama_pendek' => $sheetData[$i]['6'],
-					'harga_pokok' => $harga_pokok,
-					'diskon' => $sheetData[$i]['8'],
-					'stok' => $sheetData[$i]['9'],
-					'golongan_1' => $gol_1,
-					'golongan_2' => $gol_2,
-					'golongan_3' => $gol_3,
-					'golongan_4' => $gol_4,
-					'profit_1' => $profit_1,
-					'profit_2' => $profit_2,
-					'profit_3' => $profit_3,
-					'profit_4' => $profit_4,
-					'qty_1' => $qty_1,
-					'qty_2' => $qty_2,
-					'qty_3' => $qty_3,
-					'qty_4' => $qty_4
-				];
+        		$qty_1 = $sheetData[$i]['14'];
+        		$qty_2 = $sheetData[$i]['15'] != '' ? $sheetData[$i]['15'] : 0;
+        		$qty_3 = $sheetData[$i]['16'] != '' ? $sheetData[$i]['16'] : 0;
+        		$qty_4 = $sheetData[$i]['17'] != '' ? $sheetData[$i]['17'] : 0;
 
-				$this->db->trans_start();
+        		$data = [
+        			'id_barang' => $sheetData[$i]['0'],
+        			'id_kategori' => $sheetData[$i]['1'],
+        			'id_supplier' => $sheetData[$i]['2'],
+        			'satuan' => $sheetData[$i]['3'],
+        			'barcode' => $sheetData[$i]['4'],
+        			'nama_barang' => $sheetData[$i]['5'],
+        			'nama_pendek' => $sheetData[$i]['6'],
+        			'harga_pokok' => $harga_pokok,
+        			'diskon' => $sheetData[$i]['8'],
+        			'stok' => $sheetData[$i]['9'],
+        			'golongan_1' => $gol_1,
+        			'golongan_2' => $gol_2,
+        			'golongan_3' => $gol_3,
+        			'golongan_4' => $gol_4,
+        			'profit_1' => $profit_1,
+        			'profit_2' => $profit_2,
+        			'profit_3' => $profit_3,
+        			'profit_4' => $profit_4,
+        			'qty_1' => $qty_1,
+        			'qty_2' => $qty_2,
+        			'qty_3' => $qty_3,
+        			'qty_4' => $qty_4
+        		];
 
-				$petugas = $this->session->userdata('id_outlet');
+        		$this->db->trans_start();
 
-				if ($petugas) {
-					$id_outlet = $petugas;
-				}else{
-					$id_outlet = $this->db->get('outlet')->row()->id_outlet;
-				}
+        		$petugas = $this->session->userdata('id_outlet');
 
-				$multi_outlet = $this->db->get('pengaturan')->row()->multi_outlet;
-				$outlet = $this->db->get('outlet')->result_array();
+        		if ($petugas) {
+        			$id_outlet = $petugas;
+        		}else{
+        			$id_outlet = $this->db->get('outlet')->row()->id_outlet;
+        		}
 
-				if ($multi_outlet == 0) {
+        		$multi_outlet = $this->db->get('pengaturan')->row()->multi_outlet;
+        		$outlet = $this->db->get('outlet')->result_array();
 
-					$petugas = $this->session->userdata('id_outlet');
+        		if ($multi_outlet == 0) {
 
-					if ($petugas) {
-						$id_outlet = $petugas;
-					}else{
-						$id_outlet = $this->db->get('outlet')->row()->id_outlet;
-					}
+        			$petugas = $this->session->userdata('id_outlet');
 
-					$datstok = [
-						'id_barang' => $sheetData[$i]['0'],
-						'id_outlet' => $id_outlet,
-						'stok' => $sheetData[$i]['9']
-					];
+        			if ($petugas) {
+        				$id_outlet = $petugas;
+        			}else{
+        				$id_outlet = $this->db->get('outlet')->row()->id_outlet;
+        			}
 
-					$this->db->where('id_barang', $sheetData[$i]['0']);
-					$this->db->where('id_outlet', $id_outlet);
-					$cek_outlet = $this->db->get('stok_outlet')->row_array();
+        			$datstok = [
+        				'id_barang' => $sheetData[$i]['0'],
+        				'id_outlet' => $id_outlet,
+        				'stok' => $sheetData[$i]['9']
+        			];
 
-					if ($cek_outlet) {
-						$this->db->set('stok', $sheetData[$i]['9']);
-						$this->db->where('id_barang', $sheetData[$i]['0']);
-						$this->db->where('id_outlet', $id_outlet);
-						$this->db->update('stok_outlet');
-					}else{
-						$this->db->insert('stok_outlet', $datstok);
-					}
-					
-					$data['stok'] = 0;
-				}else{
+        			$this->db->where('id_barang', $sheetData[$i]['0']);
+        			$this->db->where('id_outlet', $id_outlet);
+        			$cek_outlet = $this->db->get('stok_outlet')->row_array();
 
-					foreach ($outlet as $row) {
+        			if ($cek_outlet) {
+        				$this->db->set('stok', $sheetData[$i]['9']);
+        				$this->db->where('id_barang', $sheetData[$i]['0']);
+        				$this->db->where('id_outlet', $id_outlet);
+        				$this->db->update('stok_outlet');
+        			}else{
+        				$this->db->insert('stok_outlet', $datstok);
+        			}
 
-						$this->db->where('id_barang', $sheetData[$i]['0']);
-						$this->db->where('id_outlet', $row['id_outlet']);
-						$cek_outlet = $this->db->get('stok_outlet')->row_array();
+        			$data['stok'] = 0;
+        		}else{
 
-						if (!$cek_outlet) {
-							$datstok = [
-								'id_barang' => $sheetData[$i]['0'],
-								'id_outlet' => $row['id_outlet'],
-								'stok' => 0
-							];
-							$this->db->insert('stok_outlet', $datstok);
-						}
-					}
+        			foreach ($outlet as $row) {
 
-					$data['stok'] = $sheetData[$i]['9'];
-				}
+        				$this->db->where('id_barang', $sheetData[$i]['0']);
+        				$this->db->where('id_outlet', $row['id_outlet']);
+        				$cek_outlet = $this->db->get('stok_outlet')->row_array();
 
-				if ($this->db->get_where('barang', ['id_barang' => $sheetData[$i]['0']])->row_array()) {
-					$this->db->where('id_barang', $sheetData[$i]['0']);
-					$this->db->update('barang', $data);
-				}else{
-					$this->db->insert('barang', $data);
-				}
+        				if (!$cek_outlet) {
+        					$datstok = [
+        						'id_barang' => $sheetData[$i]['0'],
+        						'id_outlet' => $row['id_outlet'],
+        						'stok' => 0
+        					];
+        					$this->db->insert('stok_outlet', $datstok);
+        				}
+        			}
 
-				$this->db->trans_complete();
-			}
-		}
-		$this->session->set_flashdata('success', 'Di import');
-		redirect('master/barang','refresh');
-	}
+        			$data['stok'] = $sheetData[$i]['9'];
+        		}
 
-	public function hapus_semua()
-	{
-		$this->db->query('DELETE FROM barang');
-		$this->db->query('DELETE FROM stok_outlet');
-		$this->session->set_flashdata('success', 'Di dihapus');
-		redirect('master/barang','refresh');
-	}
+        		if ($this->db->get_where('barang', ['id_barang' => $sheetData[$i]['0']])->row_array()) {
+        			$this->db->where('id_barang', $sheetData[$i]['0']);
+        			$this->db->update('barang', $data);
+        		}else{
+        			$this->db->insert('barang', $data);
+        		}
 
-	public function get_barcode($id_barang)
-	{
-		$data['barang'] = $this->barang_model->get_barang($id_barang);
-        $this->load->library('pdf');
+        		$this->db->trans_complete();
+        	}
+        }
+        $this->session->set_flashdata('success', 'Di import');
+        redirect('master/barang','refresh');
+    }
 
-        $this->pdf->setPaper('A4', 'potrait');
-        $this->pdf->filename = "barcode.pdf";
-        
-		$this->load->view('barang/get_barcode', $data);
-	}
+    public function hapus_semua()
+    {
+    	$this->db->query('DELETE FROM barang');
+    	$this->db->query('DELETE FROM stok_outlet');
+    	$this->session->set_flashdata('success', 'Di dihapus');
+    	redirect('master/barang','refresh');
+    }
 
-	public function generate_barcode()
-	{
-		$barang = $this->barang_model->get_barang();
-		$data['barcode'] = [];
-		
-		$counter = 1;
-		foreach ($barang as $row) {
-			$data['barcode'][$counter]['nama'] = $row['nama_barang'];
-			$data['barcode'][$counter]['barcode'] = $row['barcode'];
-			$counter++;
-		}
+    public function get_barcode($id_barang)
+    {
+    	$data['barang'] = $this->barang_model->get_barang($id_barang);
+    	$this->load->library('pdf');
 
-		$this->load->view('barang/generate_barcode', $data);
-	}
+    	$this->pdf->setPaper('A4', 'potrait');
+    	$this->pdf->filename = "barcode.pdf";
+
+    	$this->load->view('barang/get_barcode', $data);
+    }
+
+    public function generate_barcode()
+    {
+    	$barang = $this->barang_model->get_barang();
+    	$data['barcode'] = [];
+
+    	$counter = 1;
+    	foreach ($barang as $row) {
+    		$data['barcode'][$counter]['nama'] = $row['nama_barang'];
+    		$data['barcode'][$counter]['barcode'] = $row['barcode'];
+    		$counter++;
+    	}
+
+    	$this->load->view('barang/generate_barcode', $data);
+    }
 
 }
 

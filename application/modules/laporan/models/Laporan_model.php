@@ -893,25 +893,47 @@ class laporan_model extends CI_Model {
 			return $this->db->get('penjualan')->result_array();
 		}
 
-		public function get_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '')
+		public function get_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '', $status = '')
 		{
 			$this->db->where('id_pelanggan', $id_pelanggan);
 			$this->db->where('id_karyawan', $id_karyawan);
 			$this->db->where('jenis_paket', $jenis_paket);
+			$this->db->where('penjualan.status', $status);
 			$this->db->join('penjualan', 'faktur_penjualan');
 			$this->db->order_by('periode_ke', 'asc');
 			return $this->db->get('pembayaran')->result_array();
 		}
 
-		public function get_barang_perkelompok($id_karyawan = '', $id_pelanggan = '', $jenis_paket = '', $ket = false)
+		public function get_barang_perkelompok($faktur_penjualan)
 		{
 			$this->db->select('*, detail_penjualan.tgl_diambil, (jumlah * profit_1) as laba, (jumlah * golongan_1) as total_harga_jual');
-			$this->db->where('id_pelanggan', $id_pelanggan);
-			$this->db->where('id_karyawan', $id_karyawan);
-			$this->db->where('jenis_paket', $jenis_paket);
-			if ($ket == true) {
-				$this->db->where('keterangan', 'DIAMBIL');
-			}
+			$this->db->where('faktur_penjualan', $faktur_penjualan);
+			$this->db->join('detail_penjualan', 'faktur_penjualan');
+			$this->db->join('barang', 'id_barang');
+			$this->db->join('karyawan', 'id_karyawan');
+			$this->db->join('pelanggan', 'id_pelanggan');
+			$this->db->group_by('id_barang');
+			return $this->db->get('penjualan')->result_array();
+		}
+
+		public function get_pembayaran($dari, $sampai)
+		{
+			$this->db->where('date(pembayaran.tgl) >=', $dari);
+			$this->db->where('date(pembayaran.tgl) <=', $sampai);
+			$this->db->where('status_bayar', 'SUDAH BAYAR');
+			$this->db->join('penjualan', 'faktur_penjualan');
+			$this->db->join('karyawan', 'karyawan.id_karyawan = penjualan.id_karyawan');
+			$this->db->join('pelanggan', 'pelanggan.id_pelanggan = penjualan.id_pelanggan');
+			$this->db->order_by('pembayaran.tgl', 'desc');
+			return $this->db->get('pembayaran')->result_array();
+		}
+
+		public function get_barang_diterima($dari = '', $sampai = '')
+		{
+			$this->db->select('*, detail_penjualan.tgl_diambil, sum(jumlah * profit_1) as laba, sum(jumlah * golongan_1) as total_harga_jual, sum(jumlah) as jumlah, sum(harga_pokok) as harga_pokok, sum(golongan_1) as golongan_1');
+			$this->db->where('keterangan', 'DITERIMA');
+			$this->db->where('date(detail_penjualan.tgl_diambil) >=', $dari);
+			$this->db->where('date(detail_penjualan.tgl_diambil) <=', $sampai);
 			$this->db->join('penjualan', 'faktur_penjualan');
 			$this->db->join('barang', 'id_barang');
 			$this->db->group_by('id_barang');

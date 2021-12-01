@@ -85,26 +85,6 @@ class barang_model extends CI_Model {
 	public function insert($post)
 	{
 
-		if ($post['golongan_1'] < $post['harga_pokok']) {
-			$this->session->set_flashdata('error', 'golongan 1 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
-		if ($post['golongan_2'] < $post['harga_pokok'] && $post['golongan_2'] != 0) {
-			$this->session->set_flashdata('error', 'golongan 2 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
-		if ($post['golongan_3'] < $post['harga_pokok'] && $post['golongan_3'] != 0) {
-			$this->session->set_flashdata('error', 'golongan 3 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
-		if ($post['golongan_4'] < $post['harga_pokok'] && $post['golongan_4'] != 0) {
-			$this->session->set_flashdata('error', 'golongan 4 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
 		$data = [
 			'id_barang' => htmlspecialchars($post['id_barang']),
 			'nama_barang' => htmlspecialchars($post['nama_barang']),
@@ -119,7 +99,7 @@ class barang_model extends CI_Model {
 			'golongan_4' => htmlspecialchars($post['golongan_4']),
 			'diskon' => htmlspecialchars($post['diskon']),
 			'nama_pendek' => htmlspecialchars($post['nama_pendek']),
-			'profit_1' => htmlspecialchars($post['profit_1']),
+			'profit_1' => htmlspecialchars($post['golongan_1'] - $post['harga_pokok']),
 			'profit_2' => htmlspecialchars($post['profit_2']),
 			'profit_3' => htmlspecialchars($post['profit_3']),
 			'profit_4' => htmlspecialchars($post['profit_4']),
@@ -175,25 +155,6 @@ class barang_model extends CI_Model {
 
 	public function update($id, $post)
 	{
-		if ($post['golongan_1'] < $post['harga_pokok']) {
-			$this->session->set_flashdata('error', 'golongan 1 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
-		if ($post['golongan_2'] < $post['harga_pokok'] && $post['golongan_2'] != 0) {
-			$this->session->set_flashdata('error', 'golongan 2 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
-		if ($post['golongan_3'] < $post['harga_pokok'] && $post['golongan_3'] != 0) {
-			$this->session->set_flashdata('error', 'golongan 3 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
-
-		if ($post['golongan_4'] < $post['harga_pokok'] && $post['golongan_4'] != 0) {
-			$this->session->set_flashdata('error', 'golongan 4 kurang dari harga pokok');
-			redirect('master/barang','refresh');
-		}
 
 		$data = [
 			'nama_barang' => htmlspecialchars($post['nama_barang']),
@@ -210,7 +171,7 @@ class barang_model extends CI_Model {
 			'diskon' => htmlspecialchars($post['diskon']),
 			'stok' => htmlspecialchars($post['stok']),
 			'nama_pendek' => htmlspecialchars($post['nama_pendek']),
-			'profit_1' => htmlspecialchars($post['profit_1']),
+			'profit_1' => htmlspecialchars($post['golongan_1'] - $post['harga_pokok']),
 			'profit_2' => htmlspecialchars($post['profit_2']),
 			'profit_3' => htmlspecialchars($post['profit_3']),
 			'profit_4' => htmlspecialchars($post['profit_4']),

@@ -140,7 +140,7 @@ class penjualan_model extends CI_Model {
 				'type_golongan' => $post['type_golongan'][$i],
 				'jumlah' => $post['jumlah'][$i],
 				'total_harga' => $total_harga,
-				'keterangan' => 'BELUM DIAMBIL',
+				'keterangan' => 'BELUM DITERIMA',
 				'tgl_diambil' => date('0000-00-00 00:00:00')
 			]);
 
@@ -286,6 +286,8 @@ class penjualan_model extends CI_Model {
 					'id_barang' => $post['id_barang'][$i],
 					'type_golongan' => $post['type_golongan'][$i],
 					'jumlah' => $post['jumlah'][$i],
+					'keterangan' => 'BELUM DITERIMA',
+					'tgl_diambil' => date('0000-00-00 00:00:00'),
 					'total_harga' => $total_harga
 				]);
 			}
@@ -336,6 +338,63 @@ class penjualan_model extends CI_Model {
 
 		$this->db->where('faktur_penjualan', $post['faktur_penjualan']);
 		$this->db->update('penjualan', $data_penjualan);
+
+		if ($post['periode_lama'] != $post['periode']) {
+
+			if ($post['periode'] >= $post['periode_lama']) {
+				for ($i=$post['periode_lama']+1; $i <= $post['periode']; $i++) { 
+
+
+					$id_pby = 'PB-' . acak(10);
+
+					if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pby])->row_array()) {
+						$id_pem = 'PB-' . acak(10);
+						if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pem])->row_array()) {
+							$id_pem = 'PB-' . acak(10);
+							if ($this->db->get_where('pembayaran', ['id_pembayaran' => $id_pem])->row_array()) {
+								$id_pem = 'PB-' . acak(10);
+							}
+						}
+					}else{
+						$id_pem = $id_pby;
+					}
+
+					$pembayaran = [
+						'id_pembayaran' => $id_pem,
+						'periode_ke' => $i,
+						'faktur_penjualan' => $post['faktur_penjualan'],
+						'dibayar_dengan' => 'Cash',
+						'nominal' => $angsuran,
+						'no_debit' => '',
+						'no_kredit' => '',
+						'status_bayar' => 'BELUM BAYAR'
+					];
+
+					$this->db->insert('pembayaran', $pembayaran);
+				}
+			}else{
+
+				$delete_num = $post['periode_lama'] - $post['periode'];
+
+				$fak = $post['faktur_penjualan'];
+
+				$this->db->query("
+					DELETE FROM pembayaran WHERE id_pembayaran IN (
+						SELECT id_pembayaran FROM (
+							SELECT id_pembayaran
+							FROM pembayaran WHERE
+							faktur_penjualan = '$fak'
+							) AS T
+						) ORDER BY `periode_ke` DESC 
+					LIMIT $delete_num
+					");
+			}
+		}
+
+		$this->db->where('status_bayar', 'BELUM BAYAR');
+		$this->db->set('nominal', $angsuran);
+		$this->db->where('faktur_penjualan', $post['faktur_penjualan']);
+		$this->db->update('pembayaran');
 
 		$this->updateStatus($post['faktur_penjualan']);
 

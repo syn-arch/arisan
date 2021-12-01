@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -32,41 +31,9 @@
               <div class="box-title">
                 <h4><?php echo $judul ?></h4>
               </div>
-            </div>
+            </div>            
           </div>
           <div class="box-body">
-            <?php if ($this->uri->segment(4)): ?>
-              <div class="row">
-                <div class="col-md-6">
-                  <table class="table">
-                    <tr>
-                      <td>Kelompok/Paket</td>
-                      <td><?php echo $kelompok['nama_pelanggan'] ?></td>
-                    </tr>
-                    <tr>
-                      <td>Nama Agen</td>
-                      <td><?php echo $agen['nama_karyawan'] ?></td>
-                    </tr>
-                    <tr>
-                      <td>Alamat</td>
-                      <td><?php echo $agen['alamat'] ?></td>
-                    </tr>
-                    <tr>
-                      <td>Telepon</td>
-                      <td><?php echo $agen['telepon'] ?></td>
-                    </tr>
-                    <tr>
-                      <td>Nominal Kocokan</td>
-                      <td><?php echo ($laporan['0']['kocokan'] ?? 0) ?></td>
-                    </tr>
-                    <tr>
-                      <td>Total Bayar</td>
-                      <td><?php echo number_format($laporan['0']['total_bayar'] ?? 0) ?></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            <?php endif ?>
             <?php if ($this->uri->segment(3)): ?>
 
               <div class="table-responsive">
@@ -75,9 +42,10 @@
                     <tr>
                       <th>No</th>
                       <th>Tanggal</th>
-                      <th>Periode Ke</th>
+                      <th>Faktur</th>
+                      <th>Nama Agen</th>
+                      <th>Kelompok</th>
                       <th>Nominal</th>
-                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -85,26 +53,23 @@
                     <?php foreach ($laporan as $index => $row): ?>
                       <tr>
                         <td><?php echo $index += 1 ?></td>
-                        <td><?php echo $row['status_bayar'] == 'SUDAH BAYAR' ? ($row['tgl']) : '' ?></td>
-                        <td><?php echo $row['periode_ke'] ?></td>
-                        <td><?php echo $row['status_bayar'] == 'SUDAH BAYAR' ? number_format($row['nominal']) : '' ?></td>
-                        <?php if ($row['status_bayar'] == 'SUDAH BAYAR'): ?>
-                          <td> <button class="btn btn-success"><?php echo $row['status_bayar'] ?></button></td>
-                        <?php else: ?>
-                          <td> <button class="btn btn-warning"><?php echo $row['status_bayar'] ?></button></td>
-                        <?php endif ?>
+                        <td><?php echo $row['tgl'] ?></td>
+                        <td><?php echo $row['faktur_penjualan'] ?></td>
+                        <td><?php echo $row['nama_karyawan'] ?></td>
+                        <td><?php echo $row['nama_pelanggan'] ?></td>
+                        <td><?php echo number_format($row['nominal']) ?></td>
                       </tr>
                     <?php endforeach ?>
 
                     <?php 
 
-                    $this->db->select_sum('nominal', 'jumlah');
-                    $this->db->where('id_pelanggan', $this->uri->segment(4));
-                    $this->db->where('id_karyawan', $this->uri->segment(3));
-                    $this->db->where('penjualan.status', $this->uri->segment(6));
+                    $this->db->select('sum(nominal) as total_nominal');
+                    $this->db->where('date(pembayaran.tgl) >=', $this->uri->segment(3));
+                    $this->db->where('date(pembayaran.tgl) <=', $this->uri->segment(4));
                     $this->db->where('status_bayar', 'SUDAH BAYAR');
                     $this->db->join('penjualan', 'faktur_penjualan');
-                    $jumlah_bayar =  $this->db->get('pembayaran')->row()->jumlah;
+                    $this->db->join('karyawan', 'karyawan.id_karyawan = penjualan.id_karyawan');
+                    $total_nominal = $this->db->get('pembayaran')->row()->total_nominal;
 
                     ?>
 
@@ -112,16 +77,10 @@
                     <tr>
                       <td></td>
                       <td></td>
-                      <td>Jumlah Bayar</td>
-                      <td><?php echo number_format($jumlah_bayar) ?></td>
-                      <td></td>
-                    </tr>
-                    <tr>
                       <td></td>
                       <td></td>
-                      <td>Sisa Bayar</td>
-                      <td><?php echo number_format($laporan['0']['total_bayar'] ?? 0 - $jumlah_bayar) ?></td>
-                      <td></td>
+                      <td>Total</td>
+                      <td><?php echo number_format($total_nominal) ?></td>
                     </tr>
 
                   </tbody>
@@ -133,6 +92,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </body>
 </html>

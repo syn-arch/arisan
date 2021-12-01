@@ -80,7 +80,7 @@ $counter = 1;
   <div class="row">
     <div class="col-lg-3 col-xs-12 col-md-6">
       <div class="info-box">
-        <span class="info-box-icon bg-aqua"><i class="fa fa-dollar"></i></span>
+        <span class="info-box-icon bg-aqua">RP</span>
         <div class="info-box-content">
           <span class="info-box-text">Hari Ini</span>
           <?php 
@@ -89,14 +89,14 @@ $counter = 1;
           $hari_ini = $this->db->query($query)->row_array()['hari_ini'];
 
           ?>
-          <span class="info-box-number"><?php echo "Rp. " .  number_format($hari_ini)  ?></span>
+          <span class="info-box-number"><?php echo number_format($hari_ini)  ?></span>
         </div>
       </div>
     </div>
     <?php if (!$this->session->userdata('id_outlet')): ?>
       <div class="col-lg-3 col-xs-12 col-md-6">
         <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="fa fa-dollar"></i></span>
+          <span class="info-box-icon bg-aqua">RP</span>
           <div class="info-box-content">
             <span class="info-box-text">Bulan Ini</span>
             <?php 
@@ -115,13 +115,13 @@ $counter = 1;
             }
 
             ?>
-            <span class="info-box-number"><?php echo "Rp. " .  number_format($pendapatan_bulan_ini)  ?></span>
+            <span class="info-box-number"><?php echo number_format($pendapatan_bulan_ini)  ?></span>
           </div>
         </div>
       </div>
       <div class="col-lg-3 col-xs-12 col-md-6">
         <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="fa fa-dollar"></i></span>
+          <span class="info-box-icon bg-aqua">RP</span>
           <div class="info-box-content">
             <span class="info-box-text">Tahun Ini</span>
             <?php 
@@ -140,13 +140,13 @@ $counter = 1;
             }
 
             ?>
-            <span class="info-box-number"><?php echo "Rp. " .  number_format($pendapatan_tahun_ini)  ?></span>
+            <span class="info-box-number"><?php echo number_format($pendapatan_tahun_ini)  ?></span>
           </div>
         </div>
       </div>
       <div class="col-lg-3 col-xs-12 col-md-6">
         <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="fa fa-dollar"></i></span>
+          <span class="info-box-icon bg-aqua">RP</span>
           <div class="info-box-content">
             <span class="info-box-text">Total Pendapatan</span>
             <?php 
@@ -155,7 +155,7 @@ $counter = 1;
             $total_pendapatan = $this->db->get('penjualan')->row_array()['total_pendapatan'];
 
             ?>
-            <span class="info-box-number"><?php echo "Rp. " .  number_format($total_pendapatan)  ?></span>
+            <span class="info-box-number"><?php echo number_format($total_pendapatan)  ?></span>
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@ $counter = 1;
               <a class="btn btn-app" href="<?php echo base_url('laporan/riwayat_pembelian') ?>">
                 <i class="fa fa-book"></i> Riwayat Pembelian
               </a>
-              <a class="btn btn-app" href="<?php echo base_url('stok/stok_opname') ?>">
+              <a class="btn btn-app" href="<?php echo base_url('stok_opname') ?>">
                 <i class="fa fa-check"></i> Stok Opname
               </a>
               <a class="btn btn-app" href="<?php echo base_url('stok') ?>">
